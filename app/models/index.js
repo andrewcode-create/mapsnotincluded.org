@@ -2,6 +2,7 @@
 const Cluster = require('./Cluster');
 const Dlc = require('./Dlc')
 const TotalGeyserOutput = require('./TotalGeyserOutput');
+const Asteroid = require('./Asteriod')
 
 
 Asteriod.hasOne(TotalGeyserOutput, {

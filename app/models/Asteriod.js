@@ -27,7 +27,7 @@ const Asteroid = sequelize.define('Asterioid', {
     },
     worldTraits: {
         // enum
-        type: sequelize.ARRAY(DataTypes.ENUM({
+        type: DataTypes.ARRAY(DataTypes.ENUM({
             values: [
                 'BouldersLarge',
                 'BouldersMedium',
