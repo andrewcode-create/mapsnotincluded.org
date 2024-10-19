@@ -51,6 +51,8 @@ app.get(`${apiPrefix}`, (req, res) => {
 
 app.use(`${apiPrefix}/search`, require('./controllers/Search'));
 
+//app.use(`${apiPrefix}/upload`, require('./controllers/Search'));
+
 // for help in development - only runs locally
 if(interface === 'localhost') {
   app.use((req, res, next) => {
