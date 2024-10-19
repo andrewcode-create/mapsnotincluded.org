@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize     = require('../lib/database');
-const Save          = require('./Save');
+const Save          = require('./Cluster');
 const Geyser = require('./Geyser');
 
 
@@ -13,7 +13,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    AluminunVolcanoTotal: {
+    AluminunVolcanoTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -21,7 +21,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    CO2GeyserTotal: {
+    CO2GeyserTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -29,7 +29,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    CO2VentTotal: {
+    CO2VentTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -37,7 +37,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    ChlorineVentTotal: {
+    ChlorineVentTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -45,7 +45,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    CobaltVolcanoTotal: {
+    CobaltVolcanoTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -53,7 +53,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    CoolSaltSlushTotal: {
+    CoolSaltSlushTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -61,7 +61,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    CoolSlushTotal: {
+    CoolSlushTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -69,7 +69,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    CoolSteamVentTotal: {
+    CoolSteamVentTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -77,7 +77,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    CopperVolcanoTotal: {
+    CopperVolcanoTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -85,7 +85,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    GoldVolcanoTotal: {
+    GoldVolcanoTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -93,7 +93,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    HotPo2VentTotal: {
+    HotPo2VentTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -101,7 +101,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    HydrogenVentTotal: {
+    HydrogenVentTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -109,7 +109,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    IPo2VentTotal: {
+    IPo2VentTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -117,7 +117,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    IronVolcanoTotal: {
+    IronVolcanoTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -125,7 +125,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    LeakyOilFissureTotal: {
+    LeakyOilFissureTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -133,7 +133,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    LiquidSulferTotal: {
+    LiquidSulferTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -141,7 +141,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    MinorVolcanoTotal: {
+    MinorVolcanoTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -149,7 +149,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    NaturalGasGeyserTotal: {
+    NaturalGasGeyserTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -157,7 +157,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    NaturalGasVentTotal: {
+    NaturalGasVentTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -165,7 +165,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    NiobiumVolcanoTotal: {
+    NiobiumVolcanoTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -173,7 +173,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    PollutedWwaterVentTotal: {
+    PollutedWwaterVentTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -181,7 +181,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    SaltWaterGeyserTotal: {
+    SaltWaterGeyserTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -189,7 +189,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    SteamGeyserTotal: {
+    SteamGeyserTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -197,7 +197,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    SteamVentTotal: {
+    SteamVentTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -205,7 +205,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    TungstenVolcanoTotal: {
+    TungstenVolcanoTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -213,7 +213,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    VolcanoTotal: {
+    VolcanoTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -221,7 +221,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    WaterGeyserTotal: {
+    WaterGeyserTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },
@@ -229,7 +229,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    OilWellTotal: {
+    OilWellTotalOutput: {
         type: DataTypes.FLOAT,
         allowNull: false
     },

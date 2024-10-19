@@ -1,5 +1,5 @@
 //const File = require('./File');
-const Save = require('./Save');
+const World = require('./Cluster');
 const Geyser = require('./Geyser');
 const TotalGeyserOutput = require('./TotalGeyserOutput');
 
@@ -8,11 +8,11 @@ Asteriod.hasOne(TotalGeyserOutput, {
     foreignKey: 'coordinate'
 });
 
-Save.hasOne(TotalGeyserOutput, {
+Cluster.hasOne(TotalGeyserOutput, {
     foreignKey: 'coordinate'
 });
 
-Save.hasMany(Asteriod, {
+Cluter.hasMany(Asteriod, {
     foreignKey: 'coordinate'
 });
 
@@ -30,7 +30,7 @@ File.hasOne(Save, {
 
 module.exports = {
     Geyser,
-    Save,
+    Cluster,
     TotalGeyserOutput,
     //File,
 }

@@ -63,7 +63,7 @@ const OldSave = sequelize.define('Save', {
     },
 });
 
-const Save = sequelize.define('Save', {
+const Cluster = sequelize.define('Cluster', {
     coordinate: {
         primaryKey: true,
         type: DataTypes.STRING,
@@ -92,5 +92,5 @@ const Save = sequelize.define('Save', {
 });
 
 
-module.exports = Save;
+module.exports = World;
 

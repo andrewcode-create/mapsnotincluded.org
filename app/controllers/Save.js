@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Op } = require('sequelize');
 
-const Save  = require('../models/Save');
+const Save  = require('../models/Cluster');
 
 router.get('/', (req, res) => {
     return res.status(501);
