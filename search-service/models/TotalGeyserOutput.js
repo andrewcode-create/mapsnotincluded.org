@@ -6,7 +6,31 @@ const Cluster       = require('./Cluster');
 // has geyser counts, average geyser outputs, and aggregete water/oil/magma outputs
 const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
 
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    clusterId: {
+        type: DataTypes.STRING,
+        allowNull: true,  // This will be null for asteroids' outputs
+        references: {
+            model: 'Clusters',  // Refers to the Cluster model
+            key: 'coordinate'
+        },
+        unique: true  // Ensure one-to-one relationship for the cluster
+    },
+    asteroidId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,  // This will be null for cluster's total output
+        references: {
+            model: 'Asteroids',  // Refers to the Asteroid model
+            key: 'id'
+        },
+        unique: true  // Ensure one-to-one relationship for the asteroid
+    },
 
+    
     //geysers and vents
     AluminunVolcanoCount: {
         type: DataTypes.INTEGER,

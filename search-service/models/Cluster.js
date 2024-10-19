@@ -10,11 +10,13 @@ const Cluster = sequelize.define('Cluster', {
         allowNull: false
         //TODO add validation
     },
+    /*
     gameVersion: {
         type: DataTypes.STRING,
         allowNull: false
         //TODO add validation
     },
+    */
 });
 
 

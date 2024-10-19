@@ -4,6 +4,23 @@ const Cluster       = require('./Cluster');
 
 // This is the data for each asteriod
 const Asteroid = sequelize.define('Asterioid', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    
+    coordinate: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        references: {
+            model: 'Cluster',  // Refers to the Cluster model
+            key: 'coordinate'
+        },
+        unique: true  // Ensure one-to-one relationship for the cluster
+    },
+
+
     name: {
         type: DataTypes.STRING,
         allowNull: false

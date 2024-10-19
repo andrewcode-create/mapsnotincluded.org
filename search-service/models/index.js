@@ -6,19 +6,23 @@ const Asteroid = require('./Asteroid')
 
 
 Asteroid.hasOne(TotalGeyserOutput, {
-    foreignKey: 'coordinate'
+    foreignKey: 'asteroidId',
+    sourceKey: 'id'
 });
 
 Cluster.hasOne(TotalGeyserOutput, {
-    foreignKey: 'coordinate'
+    foreignKey: 'clusterId',
+    sourceKey: 'coordinate'
 });
 
 Cluster.hasOne(Dlc, {
-    foreignKey: 'coordinate'
+    foreignKey: 'coordinate',
+    sourceKey: 'coordinate'
 });
 
 Cluster.hasMany(Asteroid, {
-    foreignKey: 'coordinate'
+    foreignKey: 'coordinate',
+    sourceKey: 'coordinate'
 });
 
 module.exports = {
