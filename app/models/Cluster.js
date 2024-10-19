@@ -13,10 +13,6 @@ const Cluster = sequelize.define('Cluster', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    worldId: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
     vanilla: {
         type: DataTypes.BOOLEAN,
         allowNull: false
