@@ -13,7 +13,6 @@ const Cluster = sequelize.define('Cluster', {
         type: DataTypes.STRING,
         allowNull: false
     },
-
 });
 
 

@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize     = require('../lib/database');
-const Save          = require('./Cluster');
-const Geyser = require('./Geyser');
+const Cluster       = require('./Cluster');
 
 // This is the data for each asteriod
 const Asteroid = sequelize.define('Asterioid', {

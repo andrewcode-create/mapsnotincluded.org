@@ -1,11 +1,10 @@
 const { DataTypes } = require('sequelize');
 const sequelize     = require('../lib/database');
-const Save          = require('./Cluster');
-const Geyser = require('./Geyser');
+const Cluster       = require('./Cluster');
 
 
+// has geyser counts, average geyser outputs, and aggregete water/oil/magma outputs
 const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
-
 
 
     //geysers and vents
