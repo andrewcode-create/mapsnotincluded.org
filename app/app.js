@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const sequelize = require('./lib/database');
-const { Save, File } = require('./models');
+//const { Save, File } = require('./models');
 const discord = require('./lib/discord');
 
 const express = require('express');
@@ -44,9 +44,9 @@ app.get(`${apiPrefix}`, (req, res) => {
   });
 });
 
-app.use(`${apiPrefix}/saves`, require('./controllers/Save'));
-app.use(`${apiPrefix}/files`, require('./controllers/File'));
-app.use(`${apiPrefix}/ingest`, require('./controllers/Ingest'));
+//app.use(`${apiPrefix}/saves`, require('./controllers/Save'));
+//app.use(`${apiPrefix}/files`, require('./controllers/File'));
+//app.use(`${apiPrefix}/ingest`, require('./controllers/Ingest'));
 
 app.use((err, req, res, next) => {
   console.log(`biq Error: ${err}`);
