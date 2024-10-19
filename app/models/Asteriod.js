@@ -27,14 +27,16 @@ const Geyser = sequelize.define('Asterioid', {
     },
     worldTraits: {
         // enum
-        type: DataTypes.ENUM,
-        values: [
-            'MetalRich',
-            'MetalPoor',
-            'MagmaVents',
-            // TODO: Add more and make them match the JSON
-        ],
-        allowNull: false
+        type: sequelize.ARRAY(DataTypes.ENUM({
+            values: [
+                'BouldersLarge',
+                'BouldersMedium',
+                'BouldersMixed',
+                'BouldersSmall',
+                // TODO: Add more and make them match the JSON
+            ]
+        })),
+        allowNull: false,
     },
 });
 
