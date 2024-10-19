@@ -328,7 +328,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
 }, {
     hooks: {
         afterValidate: function() {
-            //TODO add salt water and polluted water
+            //TODO add salt water and polluted water to the water accumulation
             this.WaterAccumulation = 1.0*(this.WaterGeyserTotalOutput + this.CoolSteamVentTotalOutput + this.SteamGeyserTotalOutput + this.SteamVentTotalOutput) 
             this.OilAccumulation = this.OilWellTotalOutput + this.LeakyOilFissureTotalOutput
             this.MagmaAccumulation = this.VolcanoTotalOutput + this.MinorVolcanoTotalOutput
