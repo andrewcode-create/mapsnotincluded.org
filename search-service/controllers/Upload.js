@@ -57,8 +57,10 @@ router.post('/', async (req, res) => {
         const jsonOld = req.body;
         await uploadSingleJson(jsonOld); // TODO go one part at a time in the array
 
+        console.log("success uploading")
         return res.status(201).json({ response: "Upload successful!" });
     } catch (error) {
+        console.log("error uploading")
         return res.status(500).json({ response: "Upload failed", error: error.message });
     }
 });
