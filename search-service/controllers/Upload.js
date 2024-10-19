@@ -18,24 +18,28 @@ const uploadSingleJson = async (jsonOld) => {
             frostyPlanet: jsonOld["dlcs"].includes("FrostyPlanet"),
         });
         
-
-
-
-            for (let asteroidData of jsonOld.asteroids) {
-                await Asteroid.create({
-                    coordinate: jsonOld.coordinate,
-                    name: asteroidData.name, 
-                    otherField: asteroidData.otherField 
-                });
-            }
-        
-
-
-
-            await TotalGeyserOutput.create({
+        let gs = []
+        for (let asteroidData of jsonOld.asteroids) {
+            let nAst = await Asteroid.create({
                 coordinate: jsonOld.coordinate,
-                output: jsonOld.totalGeyserOutput 
+                name: asteroidData.id,
+                worldTraits: asteroidData.worldTraits
             });
+            gs.append(
+                await TotalGeyserOutput.create({
+                    clusterId: null,
+                    asteroidId: nAst.id,
+                    //TODO add geysers. For now default to 0
+                })
+            )
+        }
+
+        await TotalGeyserOutput.create({
+            
+            clusterId: jsonOld.coordinate,
+            asteroidId: null,
+            //TODO sum all geysers in gs and append. For now default to 0
+        });
         
 
         return newCluster; // Return newly created cluster or some status
