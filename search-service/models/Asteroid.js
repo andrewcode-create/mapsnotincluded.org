@@ -9,7 +9,7 @@ const Asteroid = sequelize.define('Asterioid', {
         autoIncrement: true,
         primaryKey: true
     },
-    
+
     coordinate: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -25,22 +25,6 @@ const Asteroid = sequelize.define('Asterioid', {
         type: DataTypes.STRING,
         allowNull: false
         //TODO add validation
-    },
-    offsetX: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    offsetY: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    sizeX: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    sizeY: {
-        type: DataTypes.INTEGER,
-        allowNull: false
     },
     worldTraits: {
         // enum
