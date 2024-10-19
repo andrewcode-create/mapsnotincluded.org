@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const sequelize = require('./lib/database');
 //const { Save, File } = require('./models');
-const discord = require('./lib/discord');
+//const discord = require('./lib/discord');
 
 const express = require('express');
 const cors    = require('cors');
@@ -47,6 +47,20 @@ app.get(`${apiPrefix}`, (req, res) => {
 //app.use(`${apiPrefix}/saves`, require('./controllers/Save'));
 //app.use(`${apiPrefix}/files`, require('./controllers/File'));
 //app.use(`${apiPrefix}/ingest`, require('./controllers/Ingest'));
+
+
+app.use(`${apiPrefix}/search`, require('./controllers/Search'));
+
+// for help in development - only runs locally
+if(interface === 'localhost') {
+  app.use((req, res, next) => {
+    res.json({
+      message: "Unrecognized URL."
+    });
+    console.log(`Unrecognized: ${req.method} ${req.url}`);
+    next();
+  });
+}
 
 app.use((err, req, res, next) => {
   console.log(`biq Error: ${err}`);
