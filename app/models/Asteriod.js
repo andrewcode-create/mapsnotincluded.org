@@ -7,6 +7,7 @@ const Asteroid = sequelize.define('Asterioid', {
     id: {
         type: DataTypes.STRING,
         allowNull: false
+        //TODO add validation
     },
     offsetX: {
         type: DataTypes.INTEGER,

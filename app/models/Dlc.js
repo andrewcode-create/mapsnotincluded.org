@@ -14,6 +14,14 @@ const Dlc = sequelize.define('Dlc', {
     frostyPlanet: {
         type: DataTypes.BOOLEAN,
         allowNull: false
+    },
+}, {
+    validate: { 
+        correctVanilla: function() {
+            if(this.vanilla === true && (this.spacedOut === true || this.frostyPlanet === true)) {
+                throw new Error("Cannot be both Vanilla and have DLC active");
+            }
+        }
     }
 })
 
