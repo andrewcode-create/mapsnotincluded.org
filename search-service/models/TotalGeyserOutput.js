@@ -293,17 +293,47 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
     //accumulators
     WaterAccumulation: {
         type: DataTypes.FLOAT,
-        allowNull: false
+        allowNull: true,
+        validate: {
+            require_not_init(value) {
+                if(!(value === undefined || value === null)) {
+                    throw new Error("Accumulation should not be initialy defined. It will be autmatically calculated.");
+                }
+            }
+        }
     },
     OilAccumulation: {
         type: DataTypes.FLOAT,
-        allowNull: false
+        allowNull: true,
+        validate: {
+            require_not_init(value) {
+                if(!(value === undefined || value === null)) {
+                    throw new Error("Accumulation should not be initialy defined. It will be autmatically calculated.");
+                }
+            }
+        }
     },
     MagmaAccumulation: {
         type: DataTypes.FLOAT,
-        allowNull: false
+        allowNull: true,
+        validate: {
+            require_not_init(value) {
+                if(!(value === undefined || value === null)) {
+                    throw new Error("Accumulation should not be initialy defined. It will be autmatically calculated.");
+                }
+            }
+        }
     },
 
+}, {
+    hooks: {
+        afterValidate: function() {
+            //TODO add salt water and polluted water
+            this.WaterAccumulation = 1.0*(this.WaterGeyserTotalOutput + this.CoolSteamVentTotalOutput + this.SteamGeyserTotalOutput + this.SteamVentTotalOutput) 
+            this.OilAccumulation = this.OilWellTotalOutput + this.LeakyOilFissureTotalOutput
+            this.MagmaAccumulation = this.VolcanoTotalOutput + this.MinorVolcanoTotalOutput
+        }
+    }
 })
 
 
