@@ -35,6 +35,14 @@ const Asteroid = sequelize.define('Asterioid', {
                 // TODO: Add more and make them match the JSON
             ]
         })),
+        validate: {
+            maxSize4(value) {
+                if(value.length > 4) {
+                    throw new Error("this asteroid has more than 4 world traits");
+                }
+            }
+            //TODO add validation for conficting traits
+        },
         allowNull: false,
     },
 });

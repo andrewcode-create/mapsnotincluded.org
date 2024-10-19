@@ -1,7 +1,6 @@
 //const File = require('./File');
 const Cluster = require('./Cluster');
 const Dlc = require('./Dlc')
-const Geyser = require('./Geyser');
 const TotalGeyserOutput = require('./TotalGeyserOutput');
 
 
@@ -17,7 +16,7 @@ Cluster.hasOne(Dlc, {
     foreignKey: 'coordinate'
 });
 
-Cluter.hasMany(Asteriod, {
+Cluster.hasMany(Asteriod, {
     foreignKey: 'coordinate'
 });
 
