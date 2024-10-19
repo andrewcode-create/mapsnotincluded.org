@@ -4,7 +4,7 @@ const Save          = require('./Cluster');
 const Geyser = require('./Geyser');
 
 // This is the data for each asteriod
-const Geyser = sequelize.define('Asterioid', {
+const Asteroid = sequelize.define('Asterioid', {
     id: {
         type: DataTypes.STRING,
         allowNull: false
