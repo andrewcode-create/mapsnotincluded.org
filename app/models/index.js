@@ -1,5 +1,6 @@
 //const File = require('./File');
-const World = require('./Cluster');
+const Cluster = require('./Cluster');
+const Dlc = require('./Dlc')
 const Geyser = require('./Geyser');
 const TotalGeyserOutput = require('./TotalGeyserOutput');
 
@@ -12,13 +13,19 @@ Cluster.hasOne(TotalGeyserOutput, {
     foreignKey: 'coordinate'
 });
 
+Cluster.hasOne(Dlc, {
+    foreignKey: 'coordinate'
+});
+
 Cluter.hasMany(Asteriod, {
     foreignKey: 'coordinate'
 });
 
+/*
 Asteriod.hasMany(Geyser, {
     foreignKey: 'coordinate'
 });
+*/
 
 
 // First time using sequelise, this doesn't make much sense to me as the ID is on the correct table but syntactically i would expect a save to have one file?

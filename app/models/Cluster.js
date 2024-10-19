@@ -13,18 +13,7 @@ const Cluster = sequelize.define('Cluster', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    vanilla: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    },
-    spacedOut: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    },
-    frostyPlanet: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    }
+
 });
 
 
