@@ -4,7 +4,7 @@ const Cluster       = require('./Cluster');
 
 // This is the data for each asteriod
 const Asteroid = sequelize.define('Asterioid', {
-    id: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
         //TODO add validation
