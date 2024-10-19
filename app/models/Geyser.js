@@ -2,11 +2,9 @@ const { DataTypes } = require('sequelize');
 const sequelize     = require('../lib/database');
 const Save          = require('./Save');
 
+
+// This is the data for geysers
 const Geyser = sequelize.define('Geyser', {
-    name: { // Not really important.
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     x: {
         type: DataTypes.INTEGER,
         allowNull: false
@@ -30,33 +28,9 @@ const Geyser = sequelize.define('Geyser', {
         ],
         allowNull: false
     },
-    temperature: {
+    AvgEmissionPerSecond: {
         type: DataTypes.FLOAT,
         allowNull: false
-    },
-    emitRate: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    },
-    AvgEmission: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    },
-    yearOffDuration: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
-    yearOnDuration: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
-    iterationLength: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
-    onDuration: {
-        type: DataTypes.INTEGER,
-        allowNull: true
     },
 });
 
