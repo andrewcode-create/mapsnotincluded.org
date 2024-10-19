@@ -64,11 +64,7 @@ const OldSave = sequelize.define('Save', {
 });
 
 const Save = sequelize.define('Save', {
-    seed: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    coordinates: {
+    coordinate: {
         primaryKey: true,
         type: DataTypes.STRING,
         allowNull: false
