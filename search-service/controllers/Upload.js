@@ -23,7 +23,7 @@ const uploadSingleJson = async (jsonOld) => {
             let nAst = await Asteroid.create({
                 coordinate: jsonOld.coordinate,
                 name: asteroidData.id,
-                worldTraits: asteroidData.worldTraits
+                worldTraits: [] //TODO asteroidData.worldTraits
             });
             gs.push(
                 await TotalGeyserOutput.create({
@@ -35,7 +35,6 @@ const uploadSingleJson = async (jsonOld) => {
         }
 
         await TotalGeyserOutput.create({
-            
             clusterId: jsonOld.coordinate,
             asteroidId: null,
             //TODO sum all geysers in gs and append. For now default to 0
