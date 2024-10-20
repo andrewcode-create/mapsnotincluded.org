@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {Cluster, Dlc, Asteroid, TotalGeyserOutput} = require('../models/index')
+const sequelize = require('../lib/database')
+const {Cluster, Dlc, Asteroid, TotalGeyserOutput, setAssociations } = require('../models/index')
+
 
 const uploadSingleJson = async (jsonOld) => {
     try {
@@ -8,8 +10,6 @@ const uploadSingleJson = async (jsonOld) => {
             coordinate: jsonOld.coordinate,
             gameVersion: "0"  // TODO
         });
-
-
 
         await Dlc.create({
             coordinate: jsonOld.coordinate,
@@ -25,7 +25,7 @@ const uploadSingleJson = async (jsonOld) => {
                 name: asteroidData.id,
                 worldTraits: asteroidData.worldTraits
             });
-            gs.append(
+            gs.push(
                 await TotalGeyserOutput.create({
                     clusterId: null,
                     asteroidId: nAst.id,
@@ -46,14 +46,48 @@ const uploadSingleJson = async (jsonOld) => {
 
     } catch (error) {
         console.error("Error while uploading data: ", error);
-        throw error;  // or handle the error more gracefully if needed
+        throw error;
     }
 };
+
+
+const initializeDatabase = async () => {
+    try {
+        // Sync all models to the database (without dropping)
+        /*
+        await Cluster.sync({ alter: true });
+        await Dlc.sync({ alter: true });
+        await Asteroid.sync({ alter: true });
+        await TotalGeyserOutput.sync({ alter: true });
+        */
+        console.log("Initializing database...")
+        setAssociations()
+        console.log("Set associations. Syncing...")
+        //await sequelize.sync({force:true});
+        await Cluster.sync({ force: true });
+        console.log('----------------cluster created------------');
+        await Dlc.sync({ force: true });
+        console.log('----------------dlc created------------');
+        await Asteroid.sync({ force: true });
+        console.log('----------------asteroid created------------');
+        await TotalGeyserOutput.sync({ force: true });
+        console.log('----------------TotalGeyserOutput created------------');
+
+        console.log('All tables created successfully!');
+    } catch (error) {
+        console.error('Error creating tables: ', error);
+        throw error;
+    }
+};
+
+initializeDatabase();
 
 
 // upload to SQL
 router.post('/', async (req, res) => {
     try {
+        //update schema in sql non-destructively 
+
         const jsonOld = req.body;
         await uploadSingleJson(jsonOld); // TODO go one part at a time in the array
 

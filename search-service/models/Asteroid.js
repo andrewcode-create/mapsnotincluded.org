@@ -3,7 +3,7 @@ const sequelize     = require('../lib/database');
 const Cluster       = require('./Cluster');
 
 // This is the data for each asteriod
-const Asteroid = sequelize.define('Asterioid', {
+const Asteroid = sequelize.define('Asteroid', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -16,8 +16,7 @@ const Asteroid = sequelize.define('Asterioid', {
         references: {
             model: 'Cluster',  // Refers to the Cluster model
             key: 'coordinate'
-        },
-        unique: true  // Ensure one-to-one relationship for the cluster
+        }
     },
 
 
@@ -26,6 +25,7 @@ const Asteroid = sequelize.define('Asterioid', {
         allowNull: false
         //TODO add validation
     },
+
     worldTraits: {
         // enum
         type: DataTypes.ARRAY(DataTypes.ENUM({
@@ -47,6 +47,8 @@ const Asteroid = sequelize.define('Asterioid', {
         },
         allowNull: false,
     },
+}, {
+    freezeTableName: true
 });
 
 module.exports = Asteroid;

@@ -23,6 +23,8 @@ const Dlc = sequelize.define('Dlc', {
             }
         }
     }
+}, {
+    freezeTableName: true
 })
 
 module.exports = Dlc;

@@ -24,7 +24,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.INTEGER,
         allowNull: true,  // This will be null for cluster's total output
         references: {
-            model: 'Asteroids',  // Refers to the Asteroid model
+            model: 'Asteroid',  // Refers to the Asteroid model
             key: 'id'
         },
         unique: true  // Ensure one-to-one relationship for the asteroid
@@ -357,7 +357,8 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
             this.OilAccumulation = this.OilWellTotalOutput + this.LeakyOilFissureTotalOutput
             this.MagmaAccumulation = this.VolcanoTotalOutput + this.MinorVolcanoTotalOutput
         }
-    }
+    },
+    freezeTableName: true
 })
 
 
