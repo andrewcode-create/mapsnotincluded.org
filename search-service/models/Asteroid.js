@@ -45,7 +45,7 @@ const Asteroid = sequelize.define('Asteroid', {
             }
             //TODO add validation for conficting traits
         },
-        allowNull: false,
+        allowNull: true, // allow having an empty array
     },
 }, {
     freezeTableName: true
