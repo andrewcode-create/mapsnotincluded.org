@@ -1,0 +1,1038 @@
+POST http://localhost:3000/upload
+Content-Type: application/json
+
+{
+  "coordinate": "M-BAD-C-834286562-0-0-0",
+  "cluster": "M-BAD-C",
+  "dlcs": [
+    "FrostyPlanet",
+    "SpacedOut"
+  ],
+  "asteroids": [
+    {
+      "id": "MiniBadlandsStart",
+      "offsetX": 82,
+      "offsetY": 0,
+      "sizeX": 128,
+      "sizeY": 153,
+      "worldTraits": [
+        "MetalRich"
+      ],
+      "biomePaths": "Sandstone:77,103 89,88 90,75 86,64 71,53 51,53 45,56 35,72 35,88 43,101 59,108;45,56 32,48 20,58 20,67 35,72;128,134 106,131 104,131 106,153 128,153;35,88 35,72 20,67 15,72 22,91;43,131 44,126 34,112 25,113 21,117 22,134 28,139;57,119 59,108 43,101 34,112 44,126;57,150 43,131 28,139 28,153 57,153;28,139 22,134 0,140 0,153 28,153;72,131 85,115 77,103 59,108 57,119 72,131;83,142 72,131 72,131 57,150 57,153 84,153\nToxicJungle:113,40 106,31 87,37 94,53 106,53;71,53 74,42 62,31 52,35 51,53;51,53 52,35 41,29 30,37 32,48 45,56;94,53 87,37 86,37 74,42 71,53 86,64;106,74 112,63 106,53 94,53 86,64 90,75;112,85 106,74 90,75 89,88 103,97;32,48 30,37 20,33 5,47 20,58;15,72 20,67 20,58 5,47 0,47 0,72;128,63 112,63 106,74 112,85 128,85;128,63 128,40 113,40 106,53 112,63;34,112 43,101 35,88 22,91 19,95 25,113;104,131 103,131 83,142 84,153 106,153;104,99 103,97 89,88 77,103 85,115 88,115\nOilField:128,108 128,85 112,85 103,97 104,99 115,109;106,131 115,109 104,99 88,115 103,131 104,131;128,108 115,109 106,131 128,134;19,95 22,91 15,72 0,72 0,96;25,113 19,95 0,96 0,116 21,117;22,134 21,117 0,116 0,140;72,131 57,119 44,126 43,131 57,150;103,131 88,115 85,115 72,131 83,142",
+      "pointsOfInterest": [
+        {
+          "id": "Headquarters",
+          "x": 60,
+          "y": 82
+        },
+        {
+          "id": "WarpConduitReceiver",
+          "x": 39,
+          "y": 47
+        },
+        {
+          "id": "WarpConduitSender",
+          "x": 72,
+          "y": 55
+        },
+        {
+          "id": "WarpReceiver",
+          "x": 18,
+          "y": 68
+        },
+        {
+          "id": "WarpPortal",
+          "x": 18,
+          "y": 63
+        },
+        {
+          "id": "GeneShuffler",
+          "x": 35,
+          "y": 111
+        }
+      ],
+      "geysers": [
+        {
+          "id": "OilWell",
+          "x": 79,
+          "y": 136,
+          "emitRate": 3333,
+          "avgEmitRate": 3333,
+          "idleTime": 0,
+          "eruptionTime": 1,
+          "dormancyCycles": 0,
+          "activeCycles": 1
+        },
+        {
+          "id": "OilWell",
+          "x": 86,
+          "y": 119,
+          "emitRate": 3333,
+          "avgEmitRate": 3333,
+          "idleTime": 0,
+          "eruptionTime": 1,
+          "dormancyCycles": 0,
+          "activeCycles": 1
+        },
+        {
+          "id": "OilWell",
+          "x": 15,
+          "y": 93,
+          "emitRate": 3333,
+          "avgEmitRate": 3333,
+          "idleTime": 0,
+          "eruptionTime": 1,
+          "dormancyCycles": 0,
+          "activeCycles": 1
+        },
+        {
+          "id": "OilWell",
+          "x": 98,
+          "y": 132,
+          "emitRate": 3333,
+          "avgEmitRate": 3333,
+          "idleTime": 0,
+          "eruptionTime": 1,
+          "dormancyCycles": 0,
+          "activeCycles": 1
+        },
+        {
+          "id": "OilWell",
+          "x": 49,
+          "y": 133,
+          "emitRate": 3333,
+          "avgEmitRate": 3333,
+          "idleTime": 0,
+          "eruptionTime": 1,
+          "dormancyCycles": 0,
+          "activeCycles": 1
+        },
+        {
+          "id": "steam",
+          "x": 96,
+          "y": 77,
+          "emitRate": 4943,
+          "avgEmitRate": 1344,
+          "idleTime": 393,
+          "eruptionTime": 531,
+          "dormancyCycles": 71.2,
+          "activeCycles": 63.9
+        },
+        {
+          "id": "chlorine_gas",
+          "x": 95,
+          "y": 55,
+          "emitRate": 405,
+          "avgEmitRate": 117,
+          "idleTime": 226,
+          "eruptionTime": 210,
+          "dormancyCycles": 37.5,
+          "activeCycles": 56.2
+        },
+        {
+          "id": "big_volcano",
+          "x": 88,
+          "y": 108,
+          "emitRate": 269828,
+          "avgEmitRate": 1189,
+          "idleTime": 8997,
+          "eruptionTime": 68,
+          "dormancyCycles": 46.5,
+          "activeCycles": 66.4
+        },
+        {
+          "id": "slimy_po2",
+          "x": 111,
+          "y": 57,
+          "emitRate": 389,
+          "avgEmitRate": 105,
+          "idleTime": 292,
+          "eruptionTime": 208,
+          "dormancyCycles": 32.1,
+          "activeCycles": 59.8
+        },
+        {
+          "id": "methane",
+          "x": 115,
+          "y": 119,
+          "emitRate": 358,
+          "avgEmitRate": 122,
+          "idleTime": 221,
+          "eruptionTime": 270,
+          "dormancyCycles": 54.3,
+          "activeCycles": 88
+        }
+      ]
+    },
+    {
+      "id": "MiniRadioactiveOceanWarp",
+      "offsetX": 212,
+      "offsetY": 0,
+      "sizeX": 128,
+      "sizeY": 153,
+      "worldTraits": [
+        "MetalCaves",
+        "RadioactiveCrust"
+      ],
+      "biomePaths": "Forest:79,108 92,97 97,84 92,67 90,65 70,58 57,63 46,81 49,94 57,104 76,108;113,78 107,67 92,67 97,84 106,85;109,105 106,85 97,84 92,97 106,107 106,107;106,107 92,97 79,108 90,116;76,108 57,104 54,112 67,122;54,112 57,104 49,94 37,105 44,115;57,63 45,55 44,56 39,77 46,81\nOcean:116,53 106,42 94,45 90,65 92,67 107,67;94,45 86,39 70,45 70,58 90,65;128,53 116,53 107,67 113,78 128,79;39,77 44,56 23,51 16,64 26,79;45,55 49,43 40,32 22,38 20,42 23,51 44,56;49,94 46,81 39,77 26,79 20,90 27,104 37,105;128,104 128,79 113,78 106,85 109,105;27,104 20,90 0,91 0,112 20,113;20,90 26,79 16,64 0,65 0,91;16,64 23,51 20,42 0,43 0,65;70,58 70,45 63,39 49,43 45,55 57,63\nRadioactive:113,129 106,107 106,107 90,116 90,131 106,135;68,130 67,122 54,112 44,115 40,129 43,133 64,135;44,115 37,105 27,104 20,113 24,128 40,129;24,128 20,113 0,112 0,132 21,132;128,104 109,105 106,107 113,129 128,130;90,131 90,116 79,108 76,108 67,122 68,130 86,134\nMagmaCore:128,130 113,129 106,135 107,153 128,153;106,135 90,131 86,134 86,153 107,153;43,133 40,129 24,128 21,132 23,153 40,153;21,132 0,132 0,153 23,153;64,135 43,133 40,153 65,153;86,134 68,130 64,135 65,153 86,153",
+      "pointsOfInterest": [
+        {
+          "id": "WarpConduitReceiver",
+          "x": 97,
+          "y": 71
+        },
+        {
+          "id": "WarpConduitSender",
+          "x": 43,
+          "y": 70
+        },
+        {
+          "id": "GravitasPedestal",
+          "x": 19,
+          "y": 118
+        },
+        {
+          "id": "WarpReceiver",
+          "x": 80,
+          "y": 89
+        },
+        {
+          "id": "WarpPortal",
+          "x": 58,
+          "y": 89
+        }
+      ],
+      "geysers": [
+        {
+          "id": "salt_water",
+          "x": 28,
+          "y": 82,
+          "emitRate": 9948,
+          "avgEmitRate": 3336,
+          "idleTime": 320,
+          "eruptionTime": 356,
+          "dormancyCycles": 54.3,
+          "activeCycles": 95.2
+        },
+        {
+          "id": "filthy_water",
+          "x": 112,
+          "y": 87,
+          "emitRate": 9961,
+          "avgEmitRate": 3520,
+          "idleTime": 312,
+          "eruptionTime": 467,
+          "dormancyCycles": 56.3,
+          "activeCycles": 80.9
+        },
+        {
+          "id": "slush_salt_water",
+          "x": 24,
+          "y": 60,
+          "emitRate": 5520,
+          "avgEmitRate": 1469,
+          "idleTime": 570,
+          "eruptionTime": 379,
+          "dormancyCycles": 45.3,
+          "activeCycles": 90.4
+        },
+        {
+          "id": "steam",
+          "x": 73,
+          "y": 55,
+          "emitRate": 3596,
+          "avgEmitRate": 1353,
+          "idleTime": 247,
+          "eruptionTime": 492,
+          "dormancyCycles": 43.5,
+          "activeCycles": 56.7
+        }
+      ]
+    },
+    {
+      "id": "MiniMetallicSwampy",
+      "offsetX": 342,
+      "offsetY": 0,
+      "sizeX": 128,
+      "sizeY": 153,
+      "worldTraits": [
+        "BouldersMixed"
+      ],
+      "biomePaths": "Swamp:84,80 90,70 72,54 61,68 67,81;56,40 40,25 28,39 43,52;47,67 42,61 23,64 19,72 24,83 40,85;42,61 43,52 28,39 23,40 17,49 23,64;67,81 61,68 47,67 40,85 43,90 61,93;17,94 24,83 19,72 0,72 0,94;128,38 110,38 102,48 103,52 128,64;128,66 128,64 103,52 94,69 107,78;109,92 107,78 94,69 90,70 84,80 89,97 103,98\nBoggyMarsh:94,69 103,52 102,48 85,42 72,52 72,54 90,70;72,54 72,52 59,40 56,40 43,52 42,61 47,67 61,68;19,72 23,64 17,49 0,49 0,72;37,107 43,90 40,85 24,83 17,94 25,108;57,113 62,96 61,93 43,90 37,107 47,116;43,131 47,116 37,107 25,108 21,114 24,129 40,132;24,129 21,114 0,115 0,133 19,135;128,66 107,78 109,92 128,94;100,125 108,113 103,98 89,97 83,103 82,113 95,125;128,94 109,92 103,98 108,113 128,114;128,133 128,114 108,113 100,125 108,135\nMetallic:21,114 25,108 17,94 0,94 0,115;89,97 84,80 67,81 61,93 62,96 83,103;68,132 68,121 57,113 47,116 43,131 61,138;82,113 83,103 62,96 57,113 68,121;95,125 82,113 68,121 68,132 84,138\nMagmaCore:40,132 24,129 19,135 21,153 38,153;19,135 0,133 0,153 21,153;61,138 43,131 40,132 38,153 61,153;108,135 100,125 95,125 84,138 86,153 105,153;84,138 68,132 61,138 61,153 86,153;128,133 108,135 105,153 128,153",
+      "pointsOfInterest": [
+        {
+          "id": "GravitasPedestal",
+          "x": 61,
+          "y": 126
+        }
+      ],
+      "geysers": [
+        {
+          "id": "methane",
+          "x": 37,
+          "y": 119,
+          "emitRate": 338,
+          "avgEmitRate": 140,
+          "idleTime": 232,
+          "eruptionTime": 415,
+          "dormancyCycles": 46.2,
+          "activeCycles": 84.6
+        },
+        {
+          "id": "molten_cobalt",
+          "x": 68,
+          "y": 93,
+          "emitRate": 8142,
+          "avgEmitRate": 323,
+          "idleTime": 701,
+          "eruptionTime": 49,
+          "dormancyCycles": 56.6,
+          "activeCycles": 86.8
+        },
+        {
+          "id": "molten_gold",
+          "x": 17,
+          "y": 103,
+          "emitRate": 12985,
+          "avgEmitRate": 445,
+          "idleTime": 738,
+          "eruptionTime": 33,
+          "dormancyCycles": 29.2,
+          "activeCycles": 112.5
+        },
+        {
+          "id": "molten_cobalt",
+          "x": 85,
+          "y": 97,
+          "emitRate": 7343,
+          "avgEmitRate": 298,
+          "idleTime": 653,
+          "eruptionTime": 48,
+          "dormancyCycles": 52.3,
+          "activeCycles": 74.5
+        },
+        {
+          "id": "molten_aluminum",
+          "x": 16,
+          "y": 68,
+          "emitRate": 7294,
+          "avgEmitRate": 300,
+          "idleTime": 712,
+          "eruptionTime": 54,
+          "dormancyCycles": 82.8,
+          "activeCycles": 114
+        },
+        {
+          "id": "molten_copper",
+          "x": 112,
+          "y": 88,
+          "emitRate": 5545,
+          "avgEmitRate": 302,
+          "idleTime": 757,
+          "eruptionTime": 73,
+          "dormancyCycles": 38.9,
+          "activeCycles": 64.2
+        },
+        {
+          "id": "chlorine_gas",
+          "x": 112,
+          "y": 119,
+          "emitRate": 355,
+          "avgEmitRate": 100,
+          "idleTime": 358,
+          "eruptionTime": 292,
+          "dormancyCycles": 49.5,
+          "activeCycles": 81.8
+        },
+        {
+          "id": "molten_cobalt",
+          "x": 87,
+          "y": 109,
+          "emitRate": 6924,
+          "avgEmitRate": 323,
+          "idleTime": 671,
+          "eruptionTime": 50,
+          "dormancyCycles": 38.8,
+          "activeCycles": 79
+        }
+      ]
+    },
+    {
+      "id": "MiniForestFrozen",
+      "offsetX": 472,
+      "offsetY": 0,
+      "sizeX": 128,
+      "sizeY": 153,
+      "worldTraits": [
+        "MagmaVents",
+        "Geodes"
+      ],
+      "biomePaths": "Forest:104,65 110,57 104,41 88,42 85,57 96,66;85,57 88,42 83,36 64,40 64,56 73,61;128,56 128,37 107,36 104,41 110,57;64,56 64,40 60,37 39,41 39,41 43,58 54,62;43,58 39,41 22,43 16,51 23,66 33,66;23,66 16,51 0,51 0,76 14,76\nToxicJungle:96,66 85,57 73,61 73,80 87,85;128,80 114,80 106,90 111,104 128,104;55,81 54,62 43,58 33,66 41,86;39,89 41,86 33,66 23,66 14,76 23,91;44,105 39,89 23,91 17,101 22,111 33,114;56,128 54,108 44,105 33,114 37,130 44,134\nRust:114,80 104,65 96,66 87,85 89,88 106,90;73,80 73,61 64,56 54,62 55,81 63,85;84,102 89,88 87,85 73,80 63,85 65,103 71,106;105,112 111,104 106,90 89,88 84,102 93,112;65,103 63,85 55,81 41,86 39,89 44,105 54,108;112,128 105,112 93,112 85,129 88,132 107,134;128,128 128,104 111,104 105,112 112,128;128,80 128,56 110,57 104,65 114,80;23,91 14,76 0,76 0,101 17,101;11,127 22,111 17,101 0,101 0,127;37,130 33,114 22,111 11,127 22,137\nMagmaCore:107,134 88,132 84,153 110,153;74,126 71,106 65,103 54,108 56,128 65,131;128,128 112,128 107,134 110,153 128,153;88,132 85,129 74,126 65,131 67,153 84,153;65,131 56,128 44,134 45,153 67,153;44,134 37,130 22,137 20,153 45,153;22,137 11,127 0,127 0,153 20,153;93,112 84,102 71,106 74,126 85,129",
+      "pointsOfInterest": [
+        {
+          "id": "GravitasPedestal",
+          "x": 83,
+          "y": 98
+        },
+        {
+          "id": "PropSurfaceSatellite3",
+          "x": 71,
+          "y": 58
+        }
+      ],
+      "geysers": [
+        {
+          "id": "chlorine_gas",
+          "x": 38,
+          "y": 112,
+          "emitRate": 330,
+          "avgEmitRate": 81,
+          "idleTime": 228,
+          "eruptionTime": 195,
+          "dormancyCycles": 34.4,
+          "activeCycles": 39
+        },
+        {
+          "id": "slush_water",
+          "x": 51,
+          "y": 96,
+          "emitRate": 4374,
+          "avgEmitRate": 1296,
+          "idleTime": 302,
+          "eruptionTime": 346,
+          "dormancyCycles": 46.8,
+          "activeCycles": 58.3
+        },
+        {
+          "id": "liquid_co2",
+          "x": 23,
+          "y": 99,
+          "emitRate": 293,
+          "avgEmitRate": 115,
+          "idleTime": 182,
+          "eruptionTime": 431,
+          "dormancyCycles": 59,
+          "activeCycles": 73.7
+        },
+        {
+          "id": "chlorine_gas",
+          "x": 29,
+          "y": 72,
+          "emitRate": 641,
+          "avgEmitRate": 88,
+          "idleTime": 360,
+          "eruptionTime": 126,
+          "dormancyCycles": 63.9,
+          "activeCycles": 72
+        },
+        {
+          "id": "small_volcano",
+          "x": 105,
+          "y": 104,
+          "emitRate": 117645,
+          "avgEmitRate": 675,
+          "idleTime": 7982,
+          "eruptionTime": 65,
+          "dormancyCycles": 21.8,
+          "activeCycles": 54.7
+        }
+      ]
+    },
+    {
+      "id": "MiniFlipped",
+      "offsetX": 602,
+      "offsetY": 0,
+      "sizeX": 128,
+      "sizeY": 153,
+      "worldTraits": [
+        "SlimeSplats"
+      ],
+      "biomePaths": "Wasteland:106,91 115,77 105,67 92,69 90,86 95,92;90,86 92,69 86,65 69,68 68,85 72,88;116,103 106,91 95,92 90,110 93,114 107,115;95,92 90,86 72,88 72,108 90,110;128,103 128,77 115,77 106,91 116,103;68,85 69,68 63,63 48,66 45,78 51,88;72,108 72,88 68,85 51,88 48,97 59,110 68,111;48,97 51,88 45,78 26,80 23,86 24,92 37,101;26,80 22,64 0,67 0,83 23,86;34,116 37,101 24,92 12,107 22,119;24,92 23,86 0,83 0,107 12,107;45,78 48,66 40,58 24,61 22,64 26,80\nMagmaCore:128,77 128,47 112,48 105,67 115,77;105,67 112,48 103,40 86,45 86,65 92,69;86,65 86,45 78,39 65,44 63,63 69,68;63,63 65,44 54,36 44,41 40,58 48,66;40,58 44,41 27,30 17,40 24,61;22,64 24,61 17,40 0,38 0,67\nFrozenWastes:128,103 116,103 107,115 114,129 128,131;88,130 93,114 90,110 72,108 68,111 71,130 79,134;114,129 107,115 93,114 88,130 104,140;71,130 68,111 59,110 45,125 45,129 55,137;59,110 48,97 37,101 34,116 45,125;17,131 22,119 12,107 0,107 0,134;45,129 45,125 34,116 22,119 17,131 28,144\nSandstone:79,134 71,130 55,137 56,153 79,153;128,131 114,129 104,140 104,153 128,153;55,137 45,129 28,144 28,153 56,153;28,144 17,131 0,134 0,153 28,153;104,140 88,130 79,134 79,153 104,153",
+      "pointsOfInterest": [
+        {
+          "id": "MassiveHeatSink",
+          "x": 48,
+          "y": 105
+        },
+        {
+          "id": "MassiveHeatSink",
+          "x": 107,
+          "y": 139
+        },
+        {
+          "id": "MassiveHeatSink",
+          "x": 76,
+          "y": 130
+        }
+      ],
+      "geysers": [
+        {
+          "id": "liquid_sulfur",
+          "x": 112,
+          "y": 58,
+          "emitRate": 4981,
+          "avgEmitRate": 1691,
+          "idleTime": 329,
+          "eruptionTime": 409,
+          "dormancyCycles": 35,
+          "activeCycles": 55.4
+        },
+        {
+          "id": "slimy_po2",
+          "x": 48,
+          "y": 116,
+          "emitRate": 328,
+          "avgEmitRate": 94,
+          "idleTime": 147,
+          "eruptionTime": 135,
+          "dormancyCycles": 32.8,
+          "activeCycles": 49.5
+        },
+        {
+          "id": "hot_hydrogen",
+          "x": 45,
+          "y": 88,
+          "emitRate": 252,
+          "avgEmitRate": 104,
+          "idleTime": 198,
+          "eruptionTime": 351,
+          "dormancyCycles": 42,
+          "activeCycles": 76.6
+        },
+        {
+          "id": "steam",
+          "x": 115,
+          "y": 97,
+          "emitRate": 4187,
+          "avgEmitRate": 1230,
+          "idleTime": 249,
+          "eruptionTime": 257,
+          "dormancyCycles": 50.6,
+          "activeCycles": 69.4
+        }
+      ]
+    },
+    {
+      "id": "TundraMoonlet",
+      "offsetX": 732,
+      "offsetY": 0,
+      "sizeX": 64,
+      "sizeY": 128,
+      "worldTraits": [
+        "SubsurfaceOcean",
+        "LushCore"
+      ],
+      "biomePaths": "Ocean:64,47 64,32 48,31 43,43 47,47;46,61 47,47 43,43 33,43 26,53 33,64 42,65;26,53 33,43 27,33 18,32 10,43 18,53;11,65 18,53 10,43 0,43 0,66\nFrozenWastes:64,47 47,47 46,61 64,63;64,63 46,61 42,65 45,77 64,77;45,77 42,65 33,64 21,76 21,79 26,84 42,84;64,91 64,77 45,77 42,84 46,94;24,101 26,84 21,79 0,90 19,102;33,64 26,53 18,53 11,65 21,76;21,79 21,76 11,65 0,66 0,90 0,90;14,111 19,102 0,90 0,90 0,113;46,95 46,94 42,84 26,84 24,101 31,104;52,110 46,95 31,104 34,113 46,116;64,91 46,94 46,95 52,110 64,110\nForest:34,113 31,104 24,101 19,102 14,111 23,128 25,128;14,111 0,113 0,128 23,128;46,116 34,113 25,128 48,128;64,110 52,110 46,116 48,128 64,128",
+      "pointsOfInterest": [
+        {
+          "id": "TemporalTearOpener",
+          "x": 42,
+          "y": 62
+        },
+        {
+          "id": "GravitasPedestal",
+          "x": 31,
+          "y": 108
+        }
+      ],
+      "geysers": [
+        {
+          "id": "molten_iron",
+          "x": 51,
+          "y": 103,
+          "emitRate": 5226,
+          "avgEmitRate": 261,
+          "idleTime": 713,
+          "eruptionTime": 73,
+          "dormancyCycles": 73.7,
+          "activeCycles": 86.8
+        },
+        {
+          "id": "molten_iron",
+          "x": 22,
+          "y": 87,
+          "emitRate": 6832,
+          "avgEmitRate": 287,
+          "idleTime": 765,
+          "eruptionTime": 61,
+          "dormancyCycles": 39.9,
+          "activeCycles": 52.4
+        },
+        {
+          "id": "molten_iron",
+          "x": 39,
+          "y": 74,
+          "emitRate": 6485,
+          "avgEmitRate": 303,
+          "idleTime": 727,
+          "eruptionTime": 56,
+          "dormancyCycles": 44.4,
+          "activeCycles": 82.3
+        },
+        {
+          "id": "molten_iron",
+          "x": 47,
+          "y": 90,
+          "emitRate": 8050,
+          "avgEmitRate": 232,
+          "idleTime": 665,
+          "eruptionTime": 36,
+          "dormancyCycles": 66.6,
+          "activeCycles": 83.1
+        }
+      ]
+    },
+    {
+      "id": "MarshyMoonlet",
+      "offsetX": 798,
+      "offsetY": 0,
+      "sizeX": 64,
+      "sizeY": 96,
+      "worldTraits": [],
+      "biomePaths": "BoggyMarsh:37,57 41,49 30,38 22,40 21,58 25,60;61,60 46,48 41,49 37,57 45,69;64,36 52,38 46,48 61,60 64,60;21,58 22,40 19,38 0,43 0,51 17,59;64,60 61,60 45,69 44,75 48,80 64,80\nToxicJungle:8,74 17,59 0,51 0,74;28,77 25,60 21,58 17,59 8,74 16,80;44,75 45,69 37,57 25,60 28,77 30,78\nMagmaCore:16,80 8,74 0,74 0,96 14,96;48,80 44,75 30,78 32,96 46,96;30,78 28,77 16,80 14,96 32,96;64,80 48,80 46,96 64,96",
+      "pointsOfInterest": [
+        {
+          "id": "GravitasPedestal",
+          "x": 34,
+          "y": 51
+        },
+        {
+          "id": "GravitasPedestal",
+          "x": 20,
+          "y": 51
+        },
+        {
+          "id": "SapTree",
+          "x": 27,
+          "y": 51
+        }
+      ],
+      "geysers": [
+        {
+          "id": "molten_tungsten",
+          "x": 12,
+          "y": 59,
+          "emitRate": 10329,
+          "avgEmitRate": 335,
+          "idleTime": 906,
+          "eruptionTime": 49,
+          "dormancyCycles": 37.8,
+          "activeCycles": 66.2
+        },
+        {
+          "id": "molten_tungsten",
+          "x": 10,
+          "y": 91,
+          "emitRate": 10093,
+          "avgEmitRate": 344,
+          "idleTime": 979,
+          "eruptionTime": 60,
+          "dormancyCycles": 73.7,
+          "activeCycles": 104.6
+        },
+        {
+          "id": "molten_tungsten",
+          "x": 52,
+          "y": 91,
+          "emitRate": 7992,
+          "avgEmitRate": 326,
+          "idleTime": 691,
+          "eruptionTime": 52,
+          "dormancyCycles": 69.9,
+          "activeCycles": 97.1
+        },
+        {
+          "id": "slimy_po2",
+          "x": 24,
+          "y": 72,
+          "emitRate": 314,
+          "avgEmitRate": 92,
+          "idleTime": 324,
+          "eruptionTime": 344,
+          "dormancyCycles": 20,
+          "activeCycles": 26.8
+        },
+        {
+          "id": "methane",
+          "x": 41,
+          "y": 69,
+          "emitRate": 355,
+          "avgEmitRate": 104,
+          "idleTime": 303,
+          "eruptionTime": 315,
+          "dormancyCycles": 46.2,
+          "activeCycles": 62.8
+        }
+      ]
+    },
+    {
+      "id": "MooMoonlet",
+      "offsetX": 864,
+      "offsetY": 98,
+      "sizeX": 96,
+      "sizeY": 80,
+      "worldTraits": [],
+      "biomePaths": "Moo:96,36 80,38 77,43 84,58 96,58;64,61 66,45 56,38 46,48 49,60 59,64;84,58 77,43 66,45 64,61 77,65;56,38 56,36 41,24 30,37 35,45 46,48;27,59 35,45 30,37 19,35 13,55 20,60;13,55 19,35 17,33 0,33 0,55;49,60 46,48 35,45 27,59 38,68\nFrozenWastes:77,65 64,61 59,64 59,80 79,80;59,64 49,60 38,68 38,80 59,80;20,60 13,55 0,55 0,80 15,80;96,58 84,58 77,65 79,80 96,80;38,68 27,59 20,60 15,80 38,80",
+      "pointsOfInterest": [
+        {
+          "id": "GravitasPedestal",
+          "x": 17,
+          "y": 38
+        },
+        {
+          "id": "GravitasPedestal",
+          "x": 10,
+          "y": 38
+        }
+      ],
+      "geysers": [
+        {
+          "id": "chlorine_gas",
+          "x": 84,
+          "y": 50,
+          "emitRate": 375,
+          "avgEmitRate": 91,
+          "idleTime": 250,
+          "eruptionTime": 206,
+          "dormancyCycles": 40.7,
+          "activeCycles": 47.8
+        }
+      ]
+    },
+    {
+      "id": "WaterMoonlet",
+      "offsetX": 0,
+      "offsetY": 0,
+      "sizeX": 80,
+      "sizeY": 174,
+      "worldTraits": [],
+      "biomePaths": "Barren:80,68 80,43 69,43 60,54 60,58 77,69;60,58 60,54 47,46 35,53 40,66 51,68;77,69 60,58 51,68 56,81 61,83;80,68 77,69 61,83 67,93 80,94;69,43 59,30 48,36 47,46 60,54;40,66 35,53 34,53 20,58 16,67 20,73 32,76;47,46 48,36 36,28 27,36 34,53 35,53;56,81 51,68 40,66 32,76 35,84 46,88;59,105 67,93 61,83 56,81 46,88 47,101 54,106;80,114 80,94 67,93 59,105 69,115;47,101 46,88 35,84 25,97 34,106;32,116 34,106 25,97 20,96 11,111 20,120;60,130 69,115 59,105 54,106 48,121 60,130;80,134 80,114 69,115 60,130 68,135;48,121 54,106 47,101 34,106 32,116 40,123;20,73 16,67 0,67 0,88 12,88;34,53 27,36 19,36 11,46 20,58;16,67 20,58 11,46 0,46 0,67;35,84 32,76 20,73 12,88 20,96 25,97;36,135 40,123 32,116 20,120 18,131 29,137;11,111 20,96 12,88 0,88 0,111;18,131 20,120 11,111 0,111 0,133 12,134;80,156 66,154 61,156 59,159 62,174 80,174;49,143 60,130 48,121 40,123 36,135 45,143;59,159 41,162 39,174 62,174;41,162 37,157 25,154 20,156 19,174 39,174;20,156 14,154 0,156 0,174 19,174\nSwamp:66,154 68,135 60,130 60,130 49,143 61,156;45,143 36,135 29,137 25,154 37,157;80,134 68,135 66,154 80,156;25,154 29,137 18,131 12,134 14,154 20,156;14,154 12,134 0,133 0,156;59,159 61,156 49,143 45,143 37,157 41,162",
+      "pointsOfInterest": [
+        {
+          "id": "GravitasPedestal",
+          "x": 61,
+          "y": 136
+        },
+        {
+          "id": "GravitasPedestal",
+          "x": 63,
+          "y": 136
+        }
+      ],
+      "geysers": [
+        {
+          "id": "slush_water",
+          "x": 15,
+          "y": 88,
+          "emitRate": 5255,
+          "avgEmitRate": 2167,
+          "idleTime": 156,
+          "eruptionTime": 230,
+          "dormancyCycles": 61.8,
+          "activeCycles": 138.5
+        },
+        {
+          "id": "filthy_water",
+          "x": 39,
+          "y": 60,
+          "emitRate": 11661,
+          "avgEmitRate": 2674,
+          "idleTime": 330,
+          "eruptionTime": 211,
+          "dormancyCycles": 35.7,
+          "activeCycles": 51.2
+        }
+      ]
+    },
+    {
+      "id": "NiobiumMoonlet",
+      "offsetX": 798,
+      "offsetY": 98,
+      "sizeX": 64,
+      "sizeY": 96,
+      "worldTraits": [
+        "FrozenCore"
+      ],
+      "biomePaths": "MagmaCore:36,48 32,38 23,34 15,46 19,56 30,56;23,34 23,33 15,27 0,31 0,44 15,46;18,76 14,62 0,62 0,79 15,79;53,37 45,30 32,38 36,48 48,49;19,56 15,46 0,44 0,62 14,62;51,77 46,66 35,66 29,77 32,81 47,82;64,35 53,37 48,49 52,56 64,57\nOilField:52,56 48,49 36,48 30,56 35,66 46,66;35,66 30,56 19,56 14,62 18,76 29,77;64,57 52,56 46,66 51,77 64,77\nFrozenWastes:15,79 0,79 0,96 17,96;32,81 29,77 18,76 15,79 17,96 29,96;64,77 51,77 47,82 49,96 64,96;47,82 32,81 29,96 49,96",
+      "pointsOfInterest": [
+        {
+          "id": "GravitasPedestal",
+          "x": 39,
+          "y": 51
+        }
+      ],
+      "geysers": [
+        {
+          "id": "molten_niobium",
+          "x": 30,
+          "y": 65,
+          "emitRate": 271829,
+          "avgEmitRate": 1082,
+          "idleTime": 8395,
+          "eruptionTime": 57,
+          "dormancyCycles": 57.2,
+          "activeCycles": 81.8
+        }
+      ]
+    },
+    {
+      "id": "RegolithMoonlet",
+      "offsetX": 864,
+      "offsetY": 0,
+      "sizeX": 160,
+      "sizeY": 96,
+      "worldTraits": [],
+      "biomePaths": "Barren:127,63 124,56 109,54 105,61 114,75 120,75;86,58 87,49 73,41 66,46 67,59 76,63;92,77 95,64 86,58 76,63 76,76 86,81;160,76 160,57 147,56 140,65 144,76;58,76 57,64 50,61 38,69 38,76 50,82;50,61 47,50 34,47 29,61 38,69;19,63 12,55 0,55 0,75 15,76\nSandstone:105,61 109,54 107,48 94,43 87,49 86,58 95,64;141,80 144,76 140,65 127,63 120,75 125,81;114,75 105,61 95,64 92,77 105,83;67,59 66,46 53,43 47,50 50,61 57,64;76,76 76,63 67,59 57,64 58,76 67,81;38,76 38,69 29,61 19,63 15,76 17,78 32,81\nFrozenWastes:160,76 144,76 141,80 143,96 160,96;141,80 125,81 123,96 143,96;125,81 120,75 114,75 105,83 106,96 123,96;105,83 92,77 86,81 85,96 106,96;50,82 38,76 32,81 33,96 49,96;67,81 58,76 50,82 49,96 68,96;86,81 76,76 67,81 68,96 85,96;32,81 17,78 14,96 33,96;17,78 15,76 0,75 0,96 14,96",
+      "pointsOfInterest": [
+        {
+          "id": "GravitasPedestal",
+          "x": 110,
+          "y": 65
+        },
+        {
+          "id": "GravitasPedestal",
+          "x": 114,
+          "y": 65
+        },
+        {
+          "id": "GeneShuffler",
+          "x": 112,
+          "y": 59
+        }
+      ],
+      "geysers": [
+        {
+          "id": "steam",
+          "x": 43,
+          "y": 85,
+          "emitRate": 4264,
+          "avgEmitRate": 1749,
+          "idleTime": 266,
+          "eruptionTime": 461,
+          "dormancyCycles": 41.1,
+          "activeCycles": 75.4
+        },
+        {
+          "id": "hot_steam",
+          "x": 97,
+          "y": 86,
+          "emitRate": 1866,
+          "avgEmitRate": 793,
+          "idleTime": 180,
+          "eruptionTime": 367,
+          "dormancyCycles": 50.6,
+          "activeCycles": 87.5
+        }
+      ]
+    }
+  ],
+  "starMapEntriesVanilla": null,
+  "starMapEntriesSpacedOut": [
+    {
+      "id": "MiniBadlandsStart",
+      "q": 0,
+      "r": 0
+    },
+    {
+      "id": "MiniRadioactiveOceanWarp",
+      "q": -4,
+      "r": 3
+    },
+    {
+      "id": "MiniMetallicSwampy",
+      "q": 1,
+      "r": 2
+    },
+    {
+      "id": "MiniForestFrozen",
+      "q": 3,
+      "r": -2
+    },
+    {
+      "id": "MiniFlipped",
+      "q": -1,
+      "r": -3
+    },
+    {
+      "id": "TundraMoonlet",
+      "q": -1,
+      "r": 8
+    },
+    {
+      "id": "MarshyMoonlet",
+      "q": 8,
+      "r": -7
+    },
+    {
+      "id": "MooMoonlet",
+      "q": 4,
+      "r": 3
+    },
+    {
+      "id": "WaterMoonlet",
+      "q": 9,
+      "r": 0
+    },
+    {
+      "id": "NiobiumMoonlet",
+      "q": -11,
+      "r": 10
+    },
+    {
+      "id": "RegolithMoonlet",
+      "q": 1,
+      "r": -10
+    },
+    {
+      "id": "TemporalTear",
+      "q": -4,
+      "r": 9
+    },
+    {
+      "id": "HarvestableSpacePOI_SwampyOreField",
+      "q": -2,
+      "r": 4
+    },
+    {
+      "id": "HarvestableSpacePOI_OrganicMassField",
+      "q": -4,
+      "r": -2
+    },
+    {
+      "id": "HarvestableSpacePOI_GildedAsteroidField",
+      "q": 8,
+      "r": 4
+    },
+    {
+      "id": "HarvestableSpacePOI_GlimmeringAsteroidField",
+      "q": 0,
+      "r": 11
+    },
+    {
+      "id": "HarvestableSpacePOI_OilyAsteroidField",
+      "q": -10,
+      "r": 0
+    },
+    {
+      "id": "HarvestableSpacePOI_HeliumCloud",
+      "q": -9,
+      "r": 0
+    },
+    {
+      "id": "HarvestableSpacePOI_FrozenOreField",
+      "q": 8,
+      "r": -10
+    },
+    {
+      "id": "HarvestableSpacePOI_RadioactiveGasCloud",
+      "q": 5,
+      "r": -12
+    },
+    {
+      "id": "HarvestableSpacePOI_RadioactiveAsteroidField",
+      "q": -2,
+      "r": -9
+    },
+    {
+      "id": "HarvestableSpacePOI_InterstellarOcean",
+      "q": 1,
+      "r": -6
+    },
+    {
+      "id": "HarvestableSpacePOI_SandyOreField",
+      "q": 2,
+      "r": -7
+    },
+    {
+      "id": "HarvestableSpacePOI_InterstellarOcean",
+      "q": 2,
+      "r": -8
+    },
+    {
+      "id": "HarvestableSpacePOI_ForestyOreField",
+      "q": 6,
+      "r": 0
+    },
+    {
+      "id": "HarvestableSpacePOI_InterstellarIceField",
+      "q": 6,
+      "r": -1
+    },
+    {
+      "id": "HarvestableSpacePOI_FrozenOreField",
+      "q": 11,
+      "r": -7
+    },
+    {
+      "id": "HarvestableSpacePOI_OxygenRichAsteroidField",
+      "q": -11,
+      "r": 7
+    },
+    {
+      "id": "HarvestableSpacePOI_HeliumCloud",
+      "q": 4,
+      "r": 7
+    },
+    {
+      "id": "HarvestableSpacePOI_OilyAsteroidField",
+      "q": 3,
+      "r": 7
+    },
+    {
+      "id": "HarvestableSpacePOI_HeliumCloud",
+      "q": 5,
+      "r": 6
+    },
+    {
+      "id": "HarvestableSpacePOI_RadioactiveAsteroidField",
+      "q": 4,
+      "r": 6
+    },
+    {
+      "id": "HarvestableSpacePOI_SaltyAsteroidField",
+      "q": -9,
+      "r": 11
+    },
+    {
+      "id": "HarvestableSpacePOI_RadioactiveGasCloud",
+      "q": 12,
+      "r": -3
+    },
+    {
+      "id": "HarvestableSpacePOI_IceAsteroidField",
+      "q": 12,
+      "r": -4
+    },
+    {
+      "id": "HarvestableSpacePOI_RadioactiveGasCloud",
+      "q": -7,
+      "r": -4
+    },
+    {
+      "id": "ArtifactSpacePOI_RussellsTeapot",
+      "q": 12,
+      "r": -12
+    },
+    {
+      "id": "ArtifactSpacePOI_GravitasSpaceStation3",
+      "q": -6,
+      "r": 6
+    },
+    {
+      "id": "ArtifactSpacePOI_GravitasSpaceStation2",
+      "q": -7,
+      "r": 3
+    },
+    {
+      "id": "ArtifactSpacePOI_GravitasSpaceStation7",
+      "q": -12,
+      "r": 4
+    },
+    {
+      "id": "ArtifactSpacePOI_GravitasSpaceStation8",
+      "q": 4,
+      "r": -5
+    }
+  ]
+}
+
