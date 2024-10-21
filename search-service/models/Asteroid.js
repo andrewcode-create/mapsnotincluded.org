@@ -52,7 +52,8 @@ const Asteroid = sequelize.define('Asteroid', {
         allowNull: true, // allow having an empty array
     },
 }, {
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false //no timestamps for creation and updating.
 });
 
 module.exports = Asteroid;

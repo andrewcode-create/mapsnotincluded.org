@@ -34,7 +34,8 @@ const Dlc = sequelize.define('Dlc', {
         }
     }
 }, {
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false //no timestamps for creation and updating.
 })
 
 module.exports = Dlc;

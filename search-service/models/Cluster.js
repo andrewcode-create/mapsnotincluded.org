@@ -18,7 +18,8 @@ const Cluster = sequelize.define('Cluster', {
     },
     
 }, {
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false //no timestamps for creation and updating.
 });
 
 
