@@ -32,283 +32,263 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
 
     
     //geysers and vents
-    /*
-    AluminunVolcanoCount: {
+    
+    OilWell_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    AluminunVolcanoTotalOutput: {
+    OilWell_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    CO2GeyserCount: {
+    salt_water_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    CO2GeyserTotalOutput: {
+    salt_water_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    CO2VentCount: {
+    steam_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    CO2VentTotalOutput: {
+    steam_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    ChlorineVentCount: {
+    chlorine_gas_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    ChlorineVentTotalOutput: {
+    chlorine_gas_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    CobaltVolcanoCount: {
+    methane_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    CobaltVolcanoTotalOutput: {
+    methane_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    CoolSaltSlushCount: {
+    molten_iron_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    CoolSaltSlushTotalOutput: {
+    molten_iron_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    CoolSlushCount: {
+    molten_cobalt_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    CoolSlushTotalOutput: {
+    molten_cobalt_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    CoolSteamVentCount: {
+    hot_steam_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    CoolSteamVentTotalOutput: {
+    hot_steam_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    CopperVolcanoCount: {
+    slush_water_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    CopperVolcanoTotalOutput: {
+    slush_water_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    GoldVolcanoCount: {
+    liquid_sulfur_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    GoldVolcanoTotalOutput: {
+    liquid_sulfur_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    HotPo2VentCount: {
+    hot_water_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    HotPo2VentTotalOutput: {
+    hot_water_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    HydrogenVentCount: {
+    slimy_po2_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    HydrogenVentTotalOutput: {
+    slimy_po2_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    IPo2VentCount: {
+    hot_po2_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    IPo2VentTotalOutput: {
+    hot_po2_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    IronVolcanoCount: {
+    filthy_water_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    IronVolcanoTotalOutput: {
+    filthy_water_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    LeakyOilFissureCount: {
+    liquid_co2_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    LeakyOilFissureTotalOutput: {
+    liquid_co2_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    LiquidSulferCount: {
+    slush_salt_water_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    LiquidSulferTotalOutput: {
+    slush_salt_water_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    MinorVolcanoCount: {
+    molten_gold_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    MinorVolcanoTotalOutput: {
+    molten_gold_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    NaturalGasGeyserCount: {
+    molten_tungsten_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    NaturalGasGeyserTotalOutput: {
+    molten_tungsten_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    NaturalGasVentCount: {
+    molten_niobium_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    NaturalGasVentTotalOutput: {
+    molten_niobium_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    NiobiumVolcanoCount: {
+    big_volcano_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    NiobiumVolcanoTotalOutput: {
+    big_volcano_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    PollutedWwaterVentCount: {
+    molten_aluminum_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    PollutedWwaterVentTotalOutput: {
+    molten_aluminum_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    SaltWaterGeyserCount: {
+    molten_copper_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    SaltWaterGeyserTotalOutput: {
+    molten_copper_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    SteamGeyserCount: {
+    small_volcano_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    SteamGeyserTotalOutput: {
+    small_volcano_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    SteamVentCount: {
+    hot_hydrogen_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    SteamVentTotalOutput: {
+    hot_hydrogen_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    TungstenVolcanoCount: {
+    hot_co2_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    TungstenVolcanoTotalOutput: {
+    hot_co2_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     },
-    VolcanoCount: {
+    oil_drip_Count: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
     },
-    VolcanoTotalOutput: {
-        type: DataTypes.FLOAT,
-        defaultValue: 0,
-        allowNull: false
-    },
-    WaterGeyserCount: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-    },
-    WaterGeyserTotalOutput: {
-        type: DataTypes.FLOAT,
-        defaultValue: 0,
-        allowNull: false
-    },
-    OilWellCount: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-    },
-    OilWellTotalOutput: {
+    oil_drip_TotalOutput: {
         type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
@@ -349,9 +329,10 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
             }
         }
     },
-    */
+    
 
 }, {
+    //TODO have hook change value of accululators using new geyser names
     /*
     hooks: {
         afterValidate: function() {
@@ -362,6 +343,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         }
     },
     */
+    
     freezeTableName: true,
     timestamps: false //no timestamps for creation and updating.
 })
