@@ -100,4 +100,23 @@ router.post('/one', async (req, res) => {
     }
 });
 
+router.post('/many', async (req, res) => {
+    try {
+        //update schema in sql non-destructively 
+
+        
+        for (let jsonOld of req.body) {
+            const clusterNew = await uploadSingleJson(jsonOld);
+            console.log(`uploaded ${clusterNew.coordinate}`)
+        }
+
+        console.log("success uploading")
+        return res.status(201).json({ response: "Upload successful!" });
+    } catch (error) {
+        console.log("error uploading")
+        return res.status(500).json({ response: "Upload failed", error: error.message });
+    }
+});
+
+
 module.exports = router;
