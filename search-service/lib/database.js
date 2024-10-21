@@ -5,6 +5,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, String
   port: process.env.DB_PORT,  
   dialect: 'postgres',
   logging: false,
+  max: 5
 });
 
 module.exports = sequelize;

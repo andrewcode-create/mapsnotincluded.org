@@ -83,99 +83,168 @@ const initializeDatabase = async () => {
 
 const uploadData = async (data) => {
     //const transaction = await sequelize.transaction(); // Start a transaction to rollback if anything fails
+    
+
+    const transactionCluster = await sequelize.transaction();
+    const transactionAsteroid = await sequelize.transaction();
+    const transactionTotalGeyser = await sequelize.transaction();
+    const transactionDlc = await sequelize.transaction();
+
     try { 
         //TODO
 
         // Overview of function:
-            // Bulk create Clusters
-            // Prepare DLC 
-            // Bulk create DLC
-            // Prepare asteroids and totalGeyserOutput for the asteroid
-            // Bulk create asteroids
+            // / Bulk create Clusters
+            // | Prepare DLC 
+            // \ Bulk create DLC
+            //   Prepare asteroids and totalGeyserOutput for the asteroid
+            //   Bulk create asteroids
             // Bulk create totalGeyserOutput for asteroids
             // Prepare totalGeyserOutput for Clusters
             // Bulk create totalGeyserOutput for Clusters
         
-
         // Bulk create Clusters
-        console.log("creating clusters.");
-        const clusters = data.map(seed => ({
-            coordinate: seed.coordinate,
-            gameVersion: "0" //TODO
-        }))
+        prepare_Clusters = async (data) => {
+            console.log("creating clusters.");
+            const clusters = data.map(seed => ({
+                coordinate: seed.coordinate,
+                gameVersion: "0" //TODO
+            }))
+            console.log("clusters created")
+            return clusters;
+        }
 
-        console.log(`\n\n\n\n\n\n Starting clusters, length ${clusters.length}:`)
-        const createdClusters = await Cluster.bulkCreate(clusters, { /*transaction,*/ individualHooks: true, validate: true });
+        create_Clusters = async (clusters, transaction) => {
+            console.log(`Starting clusters, length ${clusters.length}:`)
+            const createdClusters = await Cluster.bulkCreate(clusters, { transaction, individualHooks: true, validate: true });
+            console.log("finished clusters")
+            return createdClusters;
+        }
 
         // Prepare DLC
-        console.log("creating dlc")
-        const dlcs = data.map(seed => ({
-            coordinate: seed.coordinate,
-            vanilla: seed["dlcs"].length === 0,
-            spacedOut: seed["dlcs"].includes("SpacedOut"),
-            frostyPlanet: seed["dlcs"].includes("FrostyPlanet"),
-        }))
+        prepare_Dlc = async (data) => { 
+            console.log("creating dlc")
+            const dlcs = data.map(seed => ({
+                coordinate: seed.coordinate,
+                vanilla: seed["dlcs"].length === 0,
+                spacedOut: seed["dlcs"].includes("SpacedOut"),
+                frostyPlanet: seed["dlcs"].includes("FrostyPlanet"),
+            }))
+            console.log("dlc created")
+            return dlcs;
+        }
 
-        console.log(`\n\n\n\n\n\n Starting dlc, length ${dlcs.length}:`)
-        // Bulk create DLC
-        await Dlc.bulkCreate(dlcs, { /*transaction,*/ individualHooks: true, validate: true });
+        create_Dlc = async (dlcs, transaction) => {
+            console.log(`Starting dlc, length ${dlcs.length}:`)
+            // Bulk create DLC
+            await Dlc.bulkCreate(dlcs, { transaction, individualHooks: true, validate: true });
+            console.log("finished dlc")
+        }
+
+        
 
         // Prepare asteroids and totalGeyserOutput for the asteroid
-        console.log("creating asteroids and their geyser outputs")
-        const asteroids = [];
-        const totalGeyserOutputs_asteroids = [];
-        data.forEach((seed, index) => {
-            seed["asteroids"].forEach((asteroid, index2) => {
-                asteroids.push({
-                    coordinate: seed.coordinate,
-                    name: asteroid.id,
-                    worldTraits: asteroid.worldTraits,
-                });
-                totalGeyserOutputs_asteroids.push({
-                    clusterId: null,
-                    asteroidId: null, // will be set after asteroids are created
-                    // TODO add geyser, for now default to 0
+        const prepareAsteroidsAndGeyser = async (data) => {
+            console.log("creating asteroids and their geyser outputs")
+            const asteroids = [];
+            const totalGeyserOutputs_asteroids = [];
+            data.forEach((seed, index) => {
+                seed["asteroids"].forEach((asteroid, index2) => {
+                    asteroids.push({
+                        coordinate: seed.coordinate,
+                        name: asteroid.id,
+                        worldTraits: asteroid.worldTraits,
+                    });
+                    totalGeyserOutputs_asteroids.push({
+                        clusterId: null,
+                        asteroidId: null, // will be set after asteroids are created
+                        // TODO add geyser, for now default to 0
+                    })
                 })
-            })
-        });
+            });
+            console.log("finished creating asteroids and geyser outputs")
+            return [asteroids, totalGeyserOutputs_asteroids]
+        }
 
-        console.log(`\n\n\n\n\n\n Starting Asteroids, length ${asteroids.length}:`)
         // Bulk Create asteroids
-        const createdAsteroids = await Asteroid.bulkCreate(asteroids, { /*transaction,*/ individualHooks: true, validate: true });
+        const create_asteroids = async (asteroids, transaction) => {
+            console.log(`Starting Asteroids, length ${asteroids.length}:`)
+            const createdAsteroids = await Asteroid.bulkCreate(asteroids, { transaction, individualHooks: true, validate: true });
+            console.log("finished asteroids")
+            return createdAsteroids
+        }
+
+        
+
+        // Bulk create totalGeyserOutput for asteroids
+        const create_totalGeyserOutputs_asteroids = async (totalGeyserOutputs_asteroids, transaction) => {
+            console.log(`Starting Geysers_asteroids, length ${totalGeyserOutputs_asteroids.length}:`)
+            await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_asteroids, { transaction, individualHooks: true, validate: true });
+            console.log("finsihed totalGeyserOutputs_asteroids") 
+        }
+
+        // Prepare totalGeyserOutput for Clusters
+        const prepare_geyserCluster = async (createdClusters) => {
+            console.log("creating geysers for clusters")
+            const totalGeyserOutputs_clusters = createdClusters.map(cluster => ({
+                clusterId: cluster.coordinate,
+                asteroidId: null,
+                // TODO sum all geysers from asteroids in the cluster
+                // for now default to 0
+            }))
+            console.log("finished creating geyser_cluster")
+            return totalGeyserOutputs_clusters;
+        }
+
+        // Bulk create totalGeyserOutput for clusters
+        const create_totalGeyserOutputs_clusters = async (totalGeyserOutputs_clusters, transaction) => {
+            console.log(`Starting Geysers_clusters, length ${totalGeyserOutputs_clusters.length}:`)
+            await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_clusters, { transaction, individualHooks: true, validate: true });
+            console.log("finished geysers")
+        }
 
 
+
+
+        const clusters = await prepare_Clusters(data);
+        const dlcs = await prepare_Dlc(data);
+        const createdClusters = await create_Clusters(clusters, transactionCluster)
+        await transactionCluster.commit(); //do this here for concurency. TODO delete these rows if failure
+        //const [createdClusters, createdDlcs] = await Promise.all([, create_Dlc(dlcs, transactionDlc)])
+        //const createdDlcs = await create_Dlc(dlcs, transactionDlc)
+        const [asteroids, totalGeyserOutputs_asteroids] = await prepareAsteroidsAndGeyser(data)
+        const createdAsteroids = await create_asteroids(asteroids, transactionAsteroid)
         // Link asteroid Ids to TotalGeyserOutput
         console.log("linking asteroids to geysers")
         createdAsteroids.forEach((asteroid, index) => {
-            // IDK if id is returned in createdAsteroids, possible bug
-            // TODO
             totalGeyserOutputs_asteroids[index].asteroidId = asteroid.id;
         })
+        await transactionAsteroid.commit(); //do this here for concurency. TODO delete these rows if failure
+        //await create_totalGeyserOutputs_asteroids(totalGeyserOutputs_asteroids, transactionTotalGeyser)
+        const totalGeyserOutputs_clusters = await prepare_geyserCluster(createdClusters)
+        //await create_totalGeyserOutputs_clusters(totalGeyserOutputs_clusters, transactionTotalGeyser)
 
-        console.log(`\n\n\n\n\n\n Starting Geysers_asteroids, length ${totalGeyserOutputs_asteroids.length}:`)
-        // Bulk create totalGeyserOutput for asteroids
-        await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_asteroids, { /*transaction,*/ individualHooks: true, validate: true });
+        Promise.all([
+            create_totalGeyserOutputs_asteroids(totalGeyserOutputs_asteroids, transactionTotalGeyser), 
+            create_totalGeyserOutputs_clusters(totalGeyserOutputs_clusters, transactionTotalGeyser), 
+            create_Dlc(dlcs, transactionDlc)
+        ]);
 
-        console.log("creating geysers for clusters")
-        // Prepare totalGeyserOutput for Clusters
-        const totalGeyserOutputs_clusters = createdClusters.map(cluster => ({
-            clusterId: cluster.coordinate,
-            asteroidId: null,
-            // TODO sum all geysers from asteroids in the cluster
-            // for now default to 0
-        }))
 
-        console.log(`\n\n\n\n\n\n Starting Geysers_clusters, length ${totalGeyserOutputs_clusters.length}:`)
-
-        // Bulk create totalGeyserOutput for clusters
-        await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_clusters, { /*transaction,*/ individualHooks: true, validate: true });
-
-        console.log("\n\n Done geysers")
         // Commit the transaction if all operations succeed
+        console.log("commiting!")
         //await transaction.commit();
+
+        
+        await transactionTotalGeyser.commit();
+        await transactionDlc.commit();
     } catch (error) {
         // Rollback transaction to preserve previous state
         //await transaction.rollback();
+        //await transactionCluster.rollback();
+        //await transactionAsteroid.rollback();
+        await transactionTotalGeyser.rollback();
+        await transactionDlc.rollback();
 
         console.error("Error while uploading data: ", error);
         throw error;
