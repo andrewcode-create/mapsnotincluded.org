@@ -12,10 +12,10 @@ const extractFirstNUMEntries = (inputFilePath, outputFilePath, number) => {
             const jsonArray = JSON.parse(data); // Parse the JSON data
 
             // Extract the first NUM entries
-            const first100Entries = jsonArray.slice(0, number);
+            const firstNUMEntries = jsonArray.slice(0, number);
 
             // Write the extracted entries to the output file
-            fs.writeFile(outputFilePath, JSON.stringify(first100Entries, null, 2), (writeErr) => {
+            fs.writeFile(outputFilePath, JSON.stringify(firstNUMEntries), (writeErr) => {
                 if (writeErr) {
                     console.error('Error writing to the output file:', writeErr);
                 } else {
@@ -29,4 +29,4 @@ const extractFirstNUMEntries = (inputFilePath, outputFilePath, number) => {
 };
 
 // Call the function with input and output file paths
-extractFirstNUMEntries('./utils/worlds.json', './utils/world_export_100.json', 100);
+extractFirstNUMEntries('./utils/worlds.json', './utils/world_export_20.json', 20);
