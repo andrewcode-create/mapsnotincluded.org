@@ -88,22 +88,86 @@ const uploadData = async (data) => {
     const transaction = await sequelize.transaction(); // Start a transaction to rollback if anything fails
     try { 
         //TODO
-        
+
         // Overview of function:
             // Bulk create Clusters
             // Prepare DLC 
             // Bulk create DLC
-            // Prepare asteroids totalGeyserOutput for the asteroid
+            // Prepare asteroids and totalGeyserOutput for the asteroid
             // Bulk create asteroids
             // Bulk create totalGeyserOutput for asteroids
             // Prepare totalGeyserOutput for Clusters
             // Bulk create totalGeyserOutput for Clusters
         
 
+        // Bulk create Clusters
+        const clusters = data.map(seed => ({
+            coordinate: seed.coordinate,
+            gameVersion: "0" //TODO
+        }))
+
+        const createdClusters = await Cluster.bulkCreate(clusters, { transaction, individualHooks: true, validate: true });
+
+        // Prepare DLC
+        const dlcs = data.map(seed => ({
+            coordinate: seed.coordinate,
+            vanilla: seed["dlcs"].length === 0,
+            spacedOut: seed["dlcs"].includes("SpacedOut"),
+            frostyPlanet: seed["dlcs"].includes("FrostyPlanet"),
+        }))
+
+        // Bulk create DLC
+        await Dlc.bulkCreate(dlcs, { transaction, individualHooks: true, validate: true });
+
+        // Prepare asteroids and totalGeyserOutput for the asteroid
+        const asteroids = [];
+        const totalGeyserOutputs_asteroids = [];
+        data.forEach((seed, index) => {
+            seed["asteroids"].forEach((asteroid, index2) => {
+                asteroids.push({
+                    coordinate: seed.coordinate,
+                    name: asteroid.id,
+                    worldTraits: asteroid.worldTraits,
+                });
+                totalGeyserOutputs_asteroids.push({
+                    clusterId: null,
+                    asteroidId: null, // will be set after asteroids are created
+                    // TODO add geyser, for now default to 0
+                })
+            })
+        });
+
+        // Bulk Create asteroids
+        const createdAsteroids = await Asteroid.bulkCreate(asteroids, { transaction, individualHooks: true, validate: true });
+
+
+        // Link asteroid Ids to TotalGeyserOutput
+        createdAsteroids.forEach((asteroid, index) => {
+            // IDK if id is returned in createdAsteroids, possible bug
+            // TODO
+            totalGeyserOutputs_asteroids[index].asteroidId = asteroid.id;
+        })
+
+        // Bulk create totalGeyserOutput for asteroids
+        await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_asteroids, { transaction, individualHooks: true, validate: true });
+
+        // Prepare totalGeyserOutput for Clusters
+        const totalGeyserOutputs_clusters = createdClusters.map(cluster => ({
+            clusterId: cluster.coordinate,
+            asteroidId: null,
+            // TODO sum all geysers from asteroids in the cluster
+            // for now default to 0
+        }))
+
+        // Bulk create totalGeyserOutput for clusters
+        await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_clusters, { transaction, individualHooks: true, validate: true });
+
         // Commit the transaction if all operations succeed
         await transaction.commit();
     } catch (error) {
+        // Rollback transaction to preserve previous state
         await transaction.rollback();
+
         console.error("Error while uploading data: ", error);
         throw error;
     }
