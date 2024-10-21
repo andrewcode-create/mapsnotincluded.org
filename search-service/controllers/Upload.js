@@ -84,13 +84,40 @@ const initializeDatabase = async () => {
 initializeDatabase();
 
 
+const uploadData = async (data) => {
+    const transaction = await sequelize.transaction(); // Start a transaction to rollback if anything fails
+    try { 
+        //TODO
+        
+        // Overview of function:
+            // Bulk create Clusters
+            // Prepare DLC 
+            // Bulk create DLC
+            // Prepare asteroids totalGeyserOutput for the asteroid
+            // Bulk create asteroids
+            // Bulk create totalGeyserOutput for asteroids
+            // Prepare totalGeyserOutput for Clusters
+            // Bulk create totalGeyserOutput for Clusters
+        
+
+        // Commit the transaction if all operations succeed
+        await transaction.commit();
+    } catch (error) {
+        await transaction.rollback();
+        console.error("Error while uploading data: ", error);
+        throw error;
+    }
+}
+
+
+
 // upload to SQL
 router.post('/one', async (req, res) => {
     try {
         //update schema in sql non-destructively 
 
         const jsonOld = req.body;
-        await uploadSingleJson(jsonOld); // TODO go one part at a time in the array
+        await uploadSingleJson(jsonOld); //will be removed in favor of only bulk insert
 
         console.log("success uploading")
         return res.status(201).json({ response: "Upload successful!" });
@@ -101,10 +128,8 @@ router.post('/one', async (req, res) => {
 });
 
 router.post('/many', async (req, res) => {
-    try {
-        //update schema in sql non-destructively 
-
-        
+    try {        
+        //TODO bulk insert
         for (let jsonOld of req.body) {
             const clusterNew = await uploadSingleJson(jsonOld);
             console.log(`uploaded ${clusterNew.coordinate}`)
