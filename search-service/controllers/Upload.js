@@ -111,7 +111,7 @@ router.post('/many', async (req, res) => {
         }
 
         console.log("success uploading")
-        return res.status(201).json({ response: "Upload successful!" });
+        return res.status(201).json({ response: "Uploads successful!" });
     } catch (error) {
         console.log("error uploading")
         return res.status(500).json({ response: "Upload failed", error: error.message });

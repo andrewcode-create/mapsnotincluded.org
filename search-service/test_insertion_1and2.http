@@ -1,5 +1,6 @@
-POST http://localhost:3000/upload/one
+POST http://localhost:3000/upload/many
 Content-Type: application/json
+
 [
 {
   "coordinate": "M-BAD-C-834286562-0-0-0",
