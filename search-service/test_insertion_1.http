@@ -1,4 +1,4 @@
-POST http://localhost:3000/upload
+POST http://localhost:3000/upload/one
 Content-Type: application/json
 
 {

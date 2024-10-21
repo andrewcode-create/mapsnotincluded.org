@@ -85,7 +85,7 @@ initializeDatabase();
 
 
 // upload to SQL
-router.post('/', async (req, res) => {
+router.post('/one', async (req, res) => {
     try {
         //update schema in sql non-destructively 
 
