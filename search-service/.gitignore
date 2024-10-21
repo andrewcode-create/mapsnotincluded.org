@@ -4,5 +4,6 @@ verified.txt
 
 # worlds download
 worlds.json 
+world_export_*.json
 
 *.sav*
