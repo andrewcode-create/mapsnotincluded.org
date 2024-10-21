@@ -1,4 +1,2 @@
-GET http://localhost:3000/search/log_all
+GET http://localhost:3000/search/get_all
 Content-Type: application/json
-
-# gets all and prints them to console.

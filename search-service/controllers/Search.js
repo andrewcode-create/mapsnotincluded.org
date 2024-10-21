@@ -3,7 +3,7 @@ const router = express.Router();
 const sequelize = require('../lib/database')
 const {Cluster, Dlc, Asteroid, TotalGeyserOutput, setAssociations } = require('../models/index')
 
-router.get('/log_all', async (req, res) => {
+router.get('/get_all', async (req, res) => {
 
     try {
         const results = await Cluster.findAll({
@@ -28,7 +28,7 @@ router.get('/log_all', async (req, res) => {
                 }
             ]
         });
-        console.log(results);
+        //console.log(results);
         return res.status(200).json(results);
     } catch {
         console.error('Error fetching data:', error);
