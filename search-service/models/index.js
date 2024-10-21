@@ -8,43 +8,59 @@ const setAssociations = () => {
     Cluster.hasMany(Asteroid, {
         foreignKey: 'coordinate',
         sourceKey: 'coordinate',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     });
 
     Asteroid.belongsTo(Cluster, {
         foreignKey: 'coordinate',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     });
 
 
     // Cluster <-> TotalGeyserOutput (One-to-One)
     Cluster.hasOne(TotalGeyserOutput, {
         foreignKey: 'clusterId',
-        sourceKey: 'coordinate'
+        sourceKey: 'coordinate',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     });
 
     TotalGeyserOutput.belongsTo(Cluster, {
-        foreignKey: 'clusterId'
+        foreignKey: 'clusterId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     });
 
 
     // Asteroid <-> TotalGeyserOutput (One-to-One)
     Asteroid.hasOne(TotalGeyserOutput, {
         foreignKey: 'asteroidId',
-        sourceKey: 'id'
+        sourceKey: 'id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     });
 
     TotalGeyserOutput.belongsTo(Asteroid, {
-        foreignKey: 'asteroidId'
+        foreignKey: 'asteroidId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     });
 
 
     // Cluster <-> Dlc (One-to-One)
     Cluster.hasOne(Dlc, {
         foreignKey: 'coordinate',
-        sourceKey: 'coordinate'
+        sourceKey: 'coordinate',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     });
 
     Dlc.belongsTo(Cluster, {
         foreignKey: 'coordinate',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     });
 }
 

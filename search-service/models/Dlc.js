@@ -7,6 +7,16 @@ const Dlc = sequelize.define('Dlc', {
         type: DataTypes.BOOLEAN,
         allowNull: false
     },
+    coordinate: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        references: {
+            model: 'Cluster',  // Refers to the Cluster model
+            key: 'coordinate'
+        },
+        unique: true,
+        primaryKey: true
+    },
     spacedOut: {
         type: DataTypes.BOOLEAN,
         allowNull: false

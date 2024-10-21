@@ -21,7 +21,7 @@ const uploadSingleJson = async (jsonOld) => {
         let gs = []
         for (let asteroidData of jsonOld.asteroids) {
             let nAst = await Asteroid.create({
-                coordinate: jsonOld.coordinate,
+                coordinate: newCluster.coordinate,
                 name: asteroidData.id,
                 worldTraits: [] //TODO asteroidData.worldTraits
             });
@@ -33,9 +33,13 @@ const uploadSingleJson = async (jsonOld) => {
                 })
             )
         }
-
+        console.log("------------------------------------------")
+        console.log("------------------------------------------")
+        console.log(`New Cluster: ${newCluster.coordinate}`)
+        console.log("------------------------------------------")
+        console.log("------------------------------------------")
         await TotalGeyserOutput.create({
-            clusterId: jsonOld.coordinate,
+            clusterId: newCluster.coordinate,
             asteroidId: null,
             //TODO sum all geysers in gs and append. For now default to 0
         });

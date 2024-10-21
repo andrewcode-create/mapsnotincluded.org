@@ -15,7 +15,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
         type: DataTypes.STRING,
         allowNull: true,  // This will be null for asteroids' outputs
         references: {
-            model: 'Clusters',  // Refers to the Cluster model
+            model: 'Cluster',  // Refers to the Cluster model
             key: 'coordinate'
         },
         unique: true  // Ensure one-to-one relationship for the cluster
@@ -32,6 +32,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
 
     
     //geysers and vents
+    /*
     AluminunVolcanoCount: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
@@ -348,8 +349,10 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
             }
         }
     },
+    */
 
 }, {
+    /*
     hooks: {
         afterValidate: function() {
             //TODO add salt water and polluted water to the water accumulation
@@ -358,6 +361,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
             this.MagmaAccumulation = this.VolcanoTotalOutput + this.MinorVolcanoTotalOutput
         }
     },
+    */
     freezeTableName: true
 })
 
