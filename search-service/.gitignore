@@ -2,4 +2,7 @@ node_modules
 .env
 verified.txt
 
+# worlds download
+worlds.json 
+
 *.sav*
