@@ -30,22 +30,18 @@ const Asteroid = sequelize.define('Asteroid', {
         // enum
         type: DataTypes.ARRAY(DataTypes.ENUM({
             values: [
-                'BouldersLarge',
-                'BouldersMedium',
-                'BouldersMixed',
-                'BouldersSmall',
-                'DistressSignal',
-                'MagmaVents',
-                'MetalPoor',
-                'MetalRich',
-                'MetalCaves',
-                'RadioactiveCrust',
-                'Geodes',
-                'SlimeSplats',
-                'SubsurfaceOcean',
-                'LushCore',
-                'FrozenCore',
-                // TODO: Add more and make them match the JSON
+                'DistressSignal',    'MagmaVents',
+                'MetalPoor',         'MetalRich',
+                'MetalCaves',        'RadioactiveCrust',
+                'BouldersMixed',     'Geodes',
+                'SlimeSplats',       'SubsurfaceOcean',
+                'LushCore',          'FrozenCore',
+                'CrashedSatellites', 'BouldersMedium',
+                'GlaciersLarge',     'GeoDormant',
+                'Volcanoes',         'BouldersSmall',
+                'DeepOil',           'GeoActive',
+                'IrregularOil',      'BouldersLarge',
+                'MisalignedStart'
             ]
         })),
         validate: {
