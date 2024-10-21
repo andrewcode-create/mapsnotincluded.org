@@ -81,11 +81,8 @@ const initializeDatabase = async () => {
     }
 };
 
-initializeDatabase();
-
-
 const uploadData = async (data) => {
-    const transaction = await sequelize.transaction(); // Start a transaction to rollback if anything fails
+    //const transaction = await sequelize.transaction(); // Start a transaction to rollback if anything fails
     try { 
         //TODO
 
@@ -101,14 +98,17 @@ const uploadData = async (data) => {
         
 
         // Bulk create Clusters
+        console.log("creating clusters.");
         const clusters = data.map(seed => ({
             coordinate: seed.coordinate,
             gameVersion: "0" //TODO
         }))
 
-        const createdClusters = await Cluster.bulkCreate(clusters, { transaction, individualHooks: true, validate: true });
+        console.log(`\n\n\n\n\n\n Starting clusters, length ${clusters.length}:`)
+        const createdClusters = await Cluster.bulkCreate(clusters, { /*transaction,*/ individualHooks: true, validate: true });
 
         // Prepare DLC
+        console.log("creating dlc")
         const dlcs = data.map(seed => ({
             coordinate: seed.coordinate,
             vanilla: seed["dlcs"].length === 0,
@@ -116,10 +116,12 @@ const uploadData = async (data) => {
             frostyPlanet: seed["dlcs"].includes("FrostyPlanet"),
         }))
 
+        console.log(`\n\n\n\n\n\n Starting dlc, length ${dlcs.length}:`)
         // Bulk create DLC
-        await Dlc.bulkCreate(dlcs, { transaction, individualHooks: true, validate: true });
+        await Dlc.bulkCreate(dlcs, { /*transaction,*/ individualHooks: true, validate: true });
 
         // Prepare asteroids and totalGeyserOutput for the asteroid
+        console.log("creating asteroids and their geyser outputs")
         const asteroids = [];
         const totalGeyserOutputs_asteroids = [];
         data.forEach((seed, index) => {
@@ -137,20 +139,24 @@ const uploadData = async (data) => {
             })
         });
 
+        console.log(`\n\n\n\n\n\n Starting Asteroids, length ${asteroids.length}:`)
         // Bulk Create asteroids
-        const createdAsteroids = await Asteroid.bulkCreate(asteroids, { transaction, individualHooks: true, validate: true });
+        const createdAsteroids = await Asteroid.bulkCreate(asteroids, { /*transaction,*/ individualHooks: true, validate: true });
 
 
         // Link asteroid Ids to TotalGeyserOutput
+        console.log("linking asteroids to geysers")
         createdAsteroids.forEach((asteroid, index) => {
             // IDK if id is returned in createdAsteroids, possible bug
             // TODO
             totalGeyserOutputs_asteroids[index].asteroidId = asteroid.id;
         })
 
+        console.log(`\n\n\n\n\n\n Starting Geysers_asteroids, length ${totalGeyserOutputs_asteroids.length}:`)
         // Bulk create totalGeyserOutput for asteroids
-        await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_asteroids, { transaction, individualHooks: true, validate: true });
+        await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_asteroids, { /*transaction,*/ individualHooks: true, validate: true });
 
+        console.log("creating geysers for clusters")
         // Prepare totalGeyserOutput for Clusters
         const totalGeyserOutputs_clusters = createdClusters.map(cluster => ({
             clusterId: cluster.coordinate,
@@ -159,20 +165,27 @@ const uploadData = async (data) => {
             // for now default to 0
         }))
 
-        // Bulk create totalGeyserOutput for clusters
-        await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_clusters, { transaction, individualHooks: true, validate: true });
+        console.log(`\n\n\n\n\n\n Starting Geysers_clusters, length ${totalGeyserOutputs_clusters.length}:`)
 
+        // Bulk create totalGeyserOutput for clusters
+        await TotalGeyserOutput.bulkCreate(totalGeyserOutputs_clusters, { /*transaction,*/ individualHooks: true, validate: true });
+
+        console.log("\n\n Done geysers")
         // Commit the transaction if all operations succeed
-        await transaction.commit();
+        //await transaction.commit();
     } catch (error) {
         // Rollback transaction to preserve previous state
-        await transaction.rollback();
+        //await transaction.rollback();
 
         console.error("Error while uploading data: ", error);
         throw error;
     }
 }
 
+// INIT DATABASE
+// VERY IMPORTANT
+// SOURCE OF MANY A BUG
+initializeDatabase();
 
 
 // upload to SQL
@@ -206,6 +219,12 @@ router.post('/many', async (req, res) => {
         return res.status(500).json({ response: "Upload failed", error: error.message });
     }
 });
+
+router.post('/many/bulk', async (req, res) => {
+    await uploadData(req.body)
+    console.log("-------------------------------Uploaded bulk------------------------------")
+    return res.status(201).json({ response: "Uploads successful!" });
+})
 
 
 module.exports = router;
