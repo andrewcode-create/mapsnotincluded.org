@@ -32,8 +32,7 @@ const Dlc = sequelize.define('Dlc', {
                 throw new Error("Cannot be both Vanilla and have DLC active");
             }
         }
-    }
-}, {
+    },
     freezeTableName: true,
     timestamps: false //no timestamps for creation and updating.
 })
