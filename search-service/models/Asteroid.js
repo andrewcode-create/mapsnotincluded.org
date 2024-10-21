@@ -34,6 +34,10 @@ const Asteroid = sequelize.define('Asteroid', {
                 'BouldersMedium',
                 'BouldersMixed',
                 'BouldersSmall',
+                'DistressSignal',
+                'MagmaVents',
+                'MetalPoor',
+                'MetalRich',
                 // TODO: Add more and make them match the JSON
             ]
         })),

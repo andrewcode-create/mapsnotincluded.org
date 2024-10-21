@@ -23,7 +23,7 @@ const uploadSingleJson = async (jsonOld) => {
             let nAst = await Asteroid.create({
                 coordinate: newCluster.coordinate,
                 name: asteroidData.id,
-                worldTraits: [] //TODO asteroidData.worldTraits
+                worldTraits: asteroidData.worldTraits // THIS MIGHT CRASH if the enum doesn't have all the world traits
             });
             gs.push(
                 await TotalGeyserOutput.create({
@@ -33,18 +33,16 @@ const uploadSingleJson = async (jsonOld) => {
                 })
             )
         }
-        console.log("------------------------------------------")
-        console.log("------------------------------------------")
-        console.log(`New Cluster: ${newCluster.coordinate}`)
-        console.log("------------------------------------------")
-        console.log("------------------------------------------")
+        
         await TotalGeyserOutput.create({
             clusterId: newCluster.coordinate,
             asteroidId: null,
             //TODO sum all geysers in gs and append. For now default to 0
         });
         
-
+        console.log("------------------------------------------")
+        console.log("------------------------------------------")
+        console.log(`New Cluster uploaded: ${newCluster.coordinate}`)
         return newCluster; // Return newly created cluster or some status
 
     } catch (error) {
