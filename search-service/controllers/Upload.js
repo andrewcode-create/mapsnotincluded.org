@@ -40,6 +40,7 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
         }));
 
         let i = 0;
+        let geyser_keys = [];
         jsonOld.asteroids.forEach(asteroid => {
             asteroid["geysers"].forEach(geyser => {
                 if (totalGeyserOutputBulkData[i][`${geyser.id}_Count`]) {
@@ -48,6 +49,7 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
                     totalGeyserOutputBulkData[i][`${geyser.id}_TotalOutput`] += geyser["avgEmitRate"]
                 } else {
                     //new geyser
+                    geyser_keys.push(geyser.id)
                     totalGeyserOutputBulkData[i][`${geyser.id}_Count`] = 1
                     totalGeyserOutputBulkData[i][`${geyser.id}_TotalOutput`] = geyser["avgEmitRate"]
                 }
@@ -57,14 +59,26 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
 
         gs = await TotalGeyserOutput.bulkCreate(totalGeyserOutputBulkData, { transaction:transaction , individualHooks: true, validate:true, hooks:true});
 
-        
-        await TotalGeyserOutput.create({
-            clusterId: newCluster.coordinate,
-            asteroidId: null,
-            //TODO sum all geysers in gs and append. For now default to 0
-        }, {
-            transaction:transaction
-        });
+        const clusterGeyserOutput = gs.reduce(((total, current) => {
+            for(key in geyser_keys) {
+                key = geyser_keys[key]
+                if (total[`${key}_Count`]) {
+                    total[`${key}_Count`] += current[`${key}_Count`];
+                    total[`${key}_TotalOutput`] += current[`${key}_TotalOutput`];
+                } else {
+                    total[`${key}_Count`] = current[`${key}_Count`];
+                    total[`${key}_TotalOutput`] = current[`${key}_TotalOutput`];
+                }
+            }
+            return total;
+        }), {});
+
+        clusterGeyserOutput.clusterId = newCluster.coordinate;
+        clusterGeyserOutput.asteroidId = null;
+
+
+
+        await TotalGeyserOutput.create(clusterGeyserOutput, {transaction:transaction});
         
         transaction.commit();
         console.log(`${numtoPrint}: New Cluster uploaded: ${newCluster.coordinate}`)
