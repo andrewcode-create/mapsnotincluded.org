@@ -240,6 +240,7 @@ router.post('/refreshSQL', async (req, res) => {
 
     //console.log(jsonArray)
     console.log("-------------------------------Starting SQL Refresh------------------------------")
+    console.log(`There are ${jsonArray.length} seeds in the database about to be uploaded.`)
     await uploadBulk(jsonArray, false)
     console.log("-------------------------------Refreshed SQL------------------------------")
     return res.status(201).json({ response: "Refresh successful!" });
