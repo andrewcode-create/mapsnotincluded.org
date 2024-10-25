@@ -2,13 +2,16 @@ const express = require('express');
 const router = express.Router();
 const sequelize = require('../lib/database')
 const {Cluster, Dlc, Asteroid, TotalGeyserOutput, setAssociations } = require('../models/index')
-
+const { Queue } = require('async-await-queue');
 
 const uploadSingleJson = async (jsonOld) => {
+    const transaction = await sequelize.transaction();
     try {
         const newCluster = await Cluster.create({
             coordinate: jsonOld.coordinate,
             gameVersion: "0"  // TODO
+        }, {
+            transaction:transaction
         });
 
         await Dlc.create({
@@ -16,37 +19,64 @@ const uploadSingleJson = async (jsonOld) => {
             vanilla: jsonOld["dlcs"].length === 0,
             spacedOut: jsonOld["dlcs"].includes("SpacedOut"),
             frostyPlanet: jsonOld["dlcs"].includes("FrostyPlanet"),
+        }, {
+            transaction:transaction
         });
-        
+
+
+        const asteroidBulkData = jsonOld.asteroids.map(asteroidData => ({
+            coordinate: newCluster.coordinate,
+            name: asteroidData.id,
+            worldTraits: asteroidData.worldTraits
+        }));
+
+        const createdAsteroids = await Asteroid.bulkCreate(asteroidBulkData, { transaction });
+       
+        const totalGeyserOutputBulkData = createdAsteroids.map(asteroid => ({
+            clusterId: null, // this is left null for now as per your logic
+            asteroidId: asteroid.id, // link it to the asteroid
+            //TODO add geysers, default to 0 for now
+        }));
+
+        gs = await TotalGeyserOutput.bulkCreate(totalGeyserOutputBulkData, { transaction });
+
+        /*
         let gs = []
         for (let asteroidData of jsonOld.asteroids) {
             let nAst = await Asteroid.create({
                 coordinate: newCluster.coordinate,
                 name: asteroidData.id,
                 worldTraits: asteroidData.worldTraits // THIS MIGHT CRASH if the enum doesn't have all the world traits
+            }, {
+                transaction:transaction
             });
             gs.push(
                 await TotalGeyserOutput.create({
                     clusterId: null,
                     asteroidId: nAst.id,
                     //TODO add geysers. For now default to 0
-                })
+                }, {transaction:transaction})
             )
         }
+            */
         
         await TotalGeyserOutput.create({
             clusterId: newCluster.coordinate,
             asteroidId: null,
             //TODO sum all geysers in gs and append. For now default to 0
+        }, {
+            transaction:transaction
         });
         
-        console.log("------------------------------------------")
-        console.log("------------------------------------------")
+        //console.log("------------------------------------------")
+        //console.log("------------------------------------------")
+        transaction.commit();
         console.log(`New Cluster uploaded: ${newCluster.coordinate}`)
         return newCluster; // Return newly created cluster or some status
 
     } catch (error) {
         console.error("Error while uploading data: ", error);
+        transaction.rollback()
         throw error;
     }
 };
@@ -81,6 +111,7 @@ const initializeDatabase = async () => {
     }
 };
 
+/*
 const uploadData = async (data) => {
     //const transaction = await sequelize.transaction(); // Start a transaction to rollback if anything fails
     
@@ -250,6 +281,7 @@ const uploadData = async (data) => {
         throw error;
     }
 }
+    */
 
 // INIT DATABASE
 // VERY IMPORTANT
@@ -274,12 +306,20 @@ router.post('/one', async (req, res) => {
 });
 
 router.post('/many', async (req, res) => {
-    try {        
+    try {   
         //TODO bulk insert
+        /*
         for (let jsonOld of req.body) {
             const clusterNew = await uploadSingleJson(jsonOld);
             console.log(`uploaded ${clusterNew.coordinate}`)
         }
+        */
+
+        let promises = []
+        for (let jsonOld of req.body) {
+            promises.push(uploadSingleJson(jsonOld))
+        }
+        await Promise.all(promises)
 
         console.log("success uploading")
         return res.status(201).json({ response: "Uploads successful!" });
@@ -290,7 +330,15 @@ router.post('/many', async (req, res) => {
 });
 
 router.post('/many/bulk', async (req, res) => {
-    await uploadData(req.body)
+
+    const myq = new Queue(parseInt(process.env.SQL_MAX_CONNECT), 1);
+
+    //await uploadData(req.body)
+    let queue = []
+    for (let jsonOld of req.body) {
+        queue.push(myq.run(uploadSingleJson(jsonOld).catch(err => console.error(err))))
+    }
+    await Promise.all(queue)
     console.log("-------------------------------Uploaded bulk------------------------------")
     return res.status(201).json({ response: "Uploads successful!" });
 })
