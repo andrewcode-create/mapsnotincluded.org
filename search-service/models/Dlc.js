@@ -37,4 +37,4 @@ const Dlc = sequelize.define('Dlc', {
     timestamps: false //no timestamps for creation and updating.
 })
 
-module.exports = Dlc;
+//module.exports = Dlc;

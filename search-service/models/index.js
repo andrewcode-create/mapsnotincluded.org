@@ -48,7 +48,7 @@ const setAssociations = () => {
         onUpdate: 'CASCADE',
     });
 
-
+    /*
     // Cluster <-> Dlc (One-to-One)
     Cluster.hasOne(Dlc, {
         foreignKey: 'coordinate',
@@ -62,11 +62,12 @@ const setAssociations = () => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });
+    */
 }
 
 module.exports = {
     Cluster,
-    Dlc,
+    //Dlc,
     Asteroid,
     TotalGeyserOutput,
     setAssociations,

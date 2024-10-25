@@ -8,10 +8,12 @@ router.get('/get_all', async (req, res) => {
     try {
         const results = await Cluster.findAll({
             include: [
+                /*
                 {
                     model: Dlc,
                     required: false, // Optional join (includes clusters with no DLC)
                 },
+                */
                 {
                     model: Asteroid,
                     include: [

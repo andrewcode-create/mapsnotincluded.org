@@ -10,11 +10,15 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
     try {
         const newCluster = await Cluster.create({
             coordinate: jsonOld.coordinate,
-            gameVersion: "0"  // TODO
+            gameVersion: "0",  // TODO
+            vanilla: jsonOld["dlcs"].length === 0,
+            spacedOut: jsonOld["dlcs"].includes("SpacedOut"),
+            frostyPlanet: jsonOld["dlcs"].includes("FrostyPlanet"),
         }, {
             transaction:transaction
         });
 
+        /*
         await Dlc.create({
             coordinate: jsonOld.coordinate,
             vanilla: jsonOld["dlcs"].length === 0,
@@ -23,6 +27,7 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
         }, {
             transaction:transaction
         });
+        */
 
 
         const asteroidBulkData = jsonOld.asteroids.map(asteroidData => ({
@@ -123,8 +128,8 @@ const initializeDatabase = async () => {
             //await sequelize.sync({force:true});
             await Cluster.sync({ force: true });
             console.log('----------------cluster created------------');
-            await Dlc.sync({ force: true });
-            console.log('----------------dlc created------------');
+            //await Dlc.sync({ force: true });
+            //console.log('----------------dlc created------------');
             await Asteroid.sync({ force: true });
             console.log('----------------asteroid created------------');
             await TotalGeyserOutput.sync({ force: true });
