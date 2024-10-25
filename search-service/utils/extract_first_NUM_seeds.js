@@ -29,4 +29,4 @@ const extractFirstNUMEntries = (inputFilePath, outputFilePath, number) => {
 };
 
 // Call the function with input and output file paths
-extractFirstNUMEntries('./utils/worlds.json', './utils/world_export_100.json', 100);
+extractFirstNUMEntries('./worlds.json', './world_export_1.json', 1);

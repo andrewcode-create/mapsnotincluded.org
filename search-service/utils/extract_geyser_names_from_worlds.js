@@ -37,4 +37,4 @@ const logUniqueValues = (filePath) => {
 };
 
 // Call the function with the path to your JSON file and the field you want to filter by
-logUniqueValues('./utils/worlds.json');
+logUniqueValues('./worlds.json');

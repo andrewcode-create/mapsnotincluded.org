@@ -34,10 +34,26 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
         const createdAsteroids = await Asteroid.bulkCreate(asteroidBulkData, { transaction });
        
         const totalGeyserOutputBulkData = createdAsteroids.map(asteroid => ({
-            clusterId: null, // this is left null for now as per your logic
+            clusterId: null,
             asteroidId: asteroid.id, // link it to the asteroid
             //TODO add geysers, default to 0 for now
         }));
+
+        let i = 0;
+        jsonOld.asteroids.forEach(asteroid => {
+            asteroid["geysers"].forEach(geyser => {
+                if (totalGeyserOutputBulkData[i][`${geyser.id}_Count`]) {
+                    //already had one
+                    totalGeyserOutputBulkData[i][`${geyser.id}_Count`]++;
+                    totalGeyserOutputBulkData[i][`${geyser.id}_TotalOutput`] += geyser["avgEmitRate"]
+                } else {
+                    //new geyser
+                    totalGeyserOutputBulkData[i][`${geyser.id}_Count`] = 1
+                    totalGeyserOutputBulkData[i][`${geyser.id}_TotalOutput`] = geyser["avgEmitRate"]
+                }
+            })
+            i++
+        });
 
         gs = await TotalGeyserOutput.bulkCreate(totalGeyserOutputBulkData, { transaction });
 
@@ -112,29 +128,8 @@ const initializeDatabase = async () => {
     database_init_promise = null;
 }
 
-/*
-//let database_initialized = false
-let database_started_init = false
-const initializeDatabase = async () => {
-    database_started_init = true
-    //return if database is initialized
-    if(database_initialized) {
-        console.log("database initialized")
-        return;
-    }
-    //if database is not initialized but is being initialized, wait
-    while (database_started_init && !database_initialized) { 
-        await setTimeout(()=>(console.log("checking again for init database")), 1000)
-    }
 
-    
-};
-*/
-
-
-// INIT DATABASE
-// VERY IMPORTANT
-// SOURCE OF MANY A BUG
+//run init when server starts to increase response speed
 initializeDatabase()
 
 
@@ -156,7 +151,7 @@ router.post('/one', async (req, res) => {
 });
 
 
-router.post('/many', async (req, res) => {
+router.post('/many/old', async (req, res) => {
     await initializeDatabase()
     try {
         let promises = []
@@ -173,7 +168,7 @@ router.post('/many', async (req, res) => {
     }
 });
 
-router.post('/many/bulk', async (req, res) => {
+router.post('/bulk', async (req, res) => {
     await initializeDatabase()
 
     const myq = new Queue(parseInt(process.env.SQL_MAX_CONNECT), 1); //wait 1ms between database requests
