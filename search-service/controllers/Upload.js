@@ -96,6 +96,20 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
     }
 };
 
+const uploadBulk = async(jsonArrOld) =>  {
+    await initializeDatabase()
+
+    const myq = new Queue(parseInt(process.env.SQL_MAX_CONNECT), 1); //wait 1ms between database requests
+
+    let queue = []
+
+    for (let i = 1; i <= jsonArrOld.length; i++) {
+        let jsonOld = jsonArrOld[i - 1];
+        queue.push(myq.run(() => uploadSingleJson(jsonOld, i).catch(err => console.error(err))))
+    }
+    await Promise.all(queue)
+}
+
 let database_initialized = false;
 let database_init_promise = null;
 const initializeDatabase = async () => {
@@ -152,6 +166,8 @@ const initializeDatabase = async () => {
 initializeDatabase()
 
 
+
+
 // upload to SQL
 router.post('/one', async (req, res) => {
     await initializeDatabase()
@@ -188,17 +204,7 @@ router.post('/many/old', async (req, res) => {
 });
 
 router.post('/bulk', async (req, res) => {
-    await initializeDatabase()
-
-    const myq = new Queue(parseInt(process.env.SQL_MAX_CONNECT), 1); //wait 1ms between database requests
-
-    let queue = []
-
-    for (let i = 1; i <= req.body.length; i++) {
-        let jsonOld = req.body[i - 1];
-        queue.push(myq.run(() => uploadSingleJson(jsonOld, i).catch(err => console.error(err))))
-    }
-    await Promise.all(queue)
+    await uploadBulk(req.body)
     console.log("-------------------------------Uploaded bulk------------------------------")
     return res.status(201).json({ response: "Uploads successful!" });
 })
