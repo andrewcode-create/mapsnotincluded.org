@@ -31,7 +31,7 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
             worldTraits: asteroidData.worldTraits
         }));
 
-        const createdAsteroids = await Asteroid.bulkCreate(asteroidBulkData, { transaction:transaction , individualHooks: true, validate:true});
+        const createdAsteroids = await Asteroid.bulkCreate(asteroidBulkData, { transaction:transaction , individualHooks: true, validate:true, hooks:true});
        
         const totalGeyserOutputBulkData = createdAsteroids.map(asteroid => ({
             clusterId: null,
@@ -55,7 +55,7 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
             i++
         });
 
-        gs = await TotalGeyserOutput.bulkCreate(totalGeyserOutputBulkData, { transaction:transaction , individualHooks: true, validate:true});
+        gs = await TotalGeyserOutput.bulkCreate(totalGeyserOutputBulkData, { transaction:transaction , individualHooks: true, validate:true, hooks:true});
 
         
         await TotalGeyserOutput.create({

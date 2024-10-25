@@ -299,6 +299,7 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
     WaterAccumulation: {
         type: DataTypes.FLOAT,
         allowNull: true,
+        /*
         validate: {
             require_not_init(value) {
                 if(!(value === undefined || value === null)) {
@@ -306,10 +307,12 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
                 }
             }
         }
+        */
     },
     OilAccumulation: {
         type: DataTypes.FLOAT,
         allowNull: true,
+        /*
         validate: {
             require_not_init(value) {
                 if(!(value === undefined || value === null)) {
@@ -317,10 +320,12 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
                 }
             }
         }
+        */
     },
     MagmaAccumulation: {
         type: DataTypes.FLOAT,
         allowNull: true,
+        /*
         validate: {
             require_not_init(value) {
                 if(!(value === undefined || value === null)) {
@@ -328,21 +333,22 @@ const TotalGeyserOutput = sequelize.define('TotalGeyserOutput', {
                 }
             }
         }
+        */
     },
     
 
 }, {
     //TODO have hook change value of accululators using new geyser names
-    /*
+    
     hooks: {
-        afterValidate: function() {
+        beforeValidate: function(instance) {
             //TODO add salt water and polluted water to the water accumulation
-            this.WaterAccumulation = 1.0*(this.WaterGeyserTotalOutput + this.CoolSteamVentTotalOutput + this.SteamGeyserTotalOutput + this.SteamVentTotalOutput) 
-            this.OilAccumulation = this.OilWellTotalOutput + this.LeakyOilFissureTotalOutput
-            this.MagmaAccumulation = this.VolcanoTotalOutput + this.MinorVolcanoTotalOutput
+            instance.WaterAccumulation = instance.steam_TotalOutput + instance.hot_steam_TotalOutput + instance.hot_water_TotalOutput + instance.filthy_water_TotalOutput + instance.salt_water_TotalOutput + instance.slush_salt_water_TotalOutput + instance.slush_water_TotalOutput
+            instance.OilAccumulation = instance.OilWell_TotalOutput + instance.oil_drip_TotalOutput
+            instance.MagmaAccumulation = instance.small_volcano_TotalOutput + instance.big_volcano_TotalOutput
         }
     },
-    */
+    
     
     freezeTableName: true,
     timestamps: false //no timestamps for creation and updating.
