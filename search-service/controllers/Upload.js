@@ -3,14 +3,14 @@ const router = express.Router();
 const sequelize = require('../lib/database')
 const { Cluster, Dlc, Asteroid, TotalGeyserOutput, setAssociations } = require('../models/index')
 const { Queue } = require('async-await-queue');
+const fs = require('fs');
 
-const uploadSingleJson = async (jsonOld, numtoPrint) => {
-    numtoPrint = numtoPrint | 0
+const uploadSingleJson = async (jsonOld, numtoPrint = 0, printClusters = true) => {
     const transaction = await sequelize.transaction();
     try {
         const newCluster = await Cluster.create({
             coordinate: jsonOld.coordinate,
-            gameVersion: "0",  // TODO
+            gameVersion: parseInt(jsonOld["gameVersion"]),
             vanilla: jsonOld["dlcs"].length === 0,
             spacedOut: jsonOld["dlcs"].includes("SpacedOut"),
             frostyPlanet: jsonOld["dlcs"].includes("FrostyPlanet"),
@@ -86,7 +86,7 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
         await TotalGeyserOutput.create(clusterGeyserOutput, {transaction:transaction});
         
         transaction.commit();
-        console.log(`${numtoPrint}: New Cluster uploaded: ${newCluster.coordinate}`)
+        if (printClusters) console.log(`${numtoPrint}: New Cluster uploaded: ${newCluster.coordinate}`)
         return newCluster; // Return newly created cluster or some status
 
     } catch (error) {
@@ -96,7 +96,7 @@ const uploadSingleJson = async (jsonOld, numtoPrint) => {
     }
 };
 
-const uploadBulk = async(jsonArrOld) =>  {
+const uploadBulk = async(jsonArrOld, printClusters = true) =>  {
     await initializeDatabase()
 
     const myq = new Queue(parseInt(process.env.SQL_MAX_CONNECT), 1); //wait 1ms between database requests
@@ -105,7 +105,7 @@ const uploadBulk = async(jsonArrOld) =>  {
 
     for (let i = 1; i <= jsonArrOld.length; i++) {
         let jsonOld = jsonArrOld[i - 1];
-        queue.push(myq.run(() => uploadSingleJson(jsonOld, i).catch(err => console.error(err))))
+        queue.push(myq.run(() => uploadSingleJson(jsonOld, i, printClusters).catch(err => console.error(err))))
     }
     await Promise.all(queue)
 }
@@ -167,7 +167,6 @@ initializeDatabase()
 
 
 
-
 // upload to SQL
 router.post('/one', async (req, res) => {
     await initializeDatabase()
@@ -185,7 +184,7 @@ router.post('/one', async (req, res) => {
     }
 });
 
-
+/*
 router.post('/many/old', async (req, res) => {
     await initializeDatabase()
     try {
@@ -202,11 +201,48 @@ router.post('/many/old', async (req, res) => {
         return res.status(500).json({ response: "Upload failed", error: error.message });
     }
 });
+*/
 
 router.post('/bulk', async (req, res) => {
     await uploadBulk(req.body)
     console.log("-------------------------------Uploaded bulk------------------------------")
     return res.status(201).json({ response: "Uploads successful!" });
+})
+
+
+router.post('/refreshSQL', async (req, res) => {
+
+    const inputFilePath = "./utils/worlds.json";
+
+
+    let jsonArray = null;
+
+    try {
+        const data = await fs.promises.readFile(inputFilePath, 'utf8')
+        jsonArray = JSON.parse(data);
+    } catch (err) {
+        if (err.code === 'ENOENT') {
+            console.error('Error reading the input file:', err);
+            return res.status(500).json({response: "Error reading input file"});
+        } else if (err instanceof SyntaxError) {
+            console.error('Error parsing JSON data:', err);
+            return res.status(500).json({response: "Error parsing input file"});
+        } else {
+            console.error('Unexpected error:', err);
+            return res.status(500).json({response: "Unexpected error with file"});
+        }
+    }
+    
+    if (jsonArray === null) {
+        console.log("RefreshSQL error. The file is not loaded correctly.")
+        return res.status(500).json({ response: "File data is empty or null" });
+    }
+
+    //console.log(jsonArray)
+    console.log("-------------------------------Starting SQL Refresh------------------------------")
+    await uploadBulk(jsonArray, false)
+    console.log("-------------------------------Refreshed SQL------------------------------")
+    return res.status(201).json({ response: "Refresh successful!" });
 })
 
 
