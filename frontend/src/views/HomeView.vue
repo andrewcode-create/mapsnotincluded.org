@@ -4,19 +4,25 @@
 
 <template>
   <main class="container mt-5">
-    <h1>Welcome</h1>
-    <p>
-      Welcome to MapsNotIncluded! This website is a work in progress, and will eventually contain a variety of map / world generation tools and resources for Oxygen Not Included.
-    </p>
-    <p>
-      If you would like to send us world-saves to index, head over to <router-link to="/contribute">contribute</router-link>, otherwise please consider joining our <a href="https://discord.gg/3vhCpp6PNq" target="mni_disc">Discord</a>, or submit an issue / PR on <a href="https://github.com/barratt/mapsnotincluded.org" target="mni_gh">GitHub</a>!
-    </p>
+    <h1>{{ $t('home.title') }}</h1>
+    <p>{{ $t('home.description_1') }}</p>
+    <i18n-t keypath="home.description_2" tag="p">
+      <template v-slot:contributeLink>
+        <router-link to="/contribute">{{ $t('home.link.contribute') }}</router-link>
+      </template>
+      <template v-slot:discordLink>
+        <a href="https://discord.gg/3vhCpp6PNq" target="mni_disc">{{ $t('home.link.discord') }}</a>
+      </template>
+      <template v-slot:githubLink>
+        <a href="https://github.com/barratt/mapsnotincluded.org" target="mni_gh">{{ $t('home.link.github') }}</a>
+      </template>
+    </i18n-t>
 
     <div class="d-flex gap-3 mt-5 flex-column flex-md-row">
-      <router-link to="/map-explorer" class="btn btn-lg btn-outline-warning flex-grow-1">Map Explorer</router-link>
-      <!--<router-link to="/seed-explorer" class="btn btn-lg btn-outline-primary flex-grow-1">Seed Explorer</router-link>-->
-      <router-link to="/trait-finder" class="btn btn-lg btn-outline-success flex-grow-1">World Trait Finder</router-link>
-      <router-link to="/starmap-generator" class="btn btn-lg btn-outline-info flex-grow-1">Star Map Generator</router-link>
+      <router-link to="/map-explorer" class="btn btn-lg btn-outline-warning flex-grow-1">{{ $t('home.link_map_explorer') }}</router-link>
+      <!--<router-link to="/seed-viewer" class="btn btn-lg btn-outline-primary flex-grow-1">Seed Viewer</router-link>-->
+      <router-link to="/trait-finder" class="btn btn-lg btn-outline-success flex-grow-1">{{ $t('home.link_trait_finder') }}</router-link>
+      <router-link to="/starmap-generator" class="btn btn-lg btn-outline-info flex-grow-1">{{ $t('home.link_starmap_generator') }}</router-link>
     </div>
   </main>
 </template>

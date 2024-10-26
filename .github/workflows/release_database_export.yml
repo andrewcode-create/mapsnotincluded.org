@@ -15,24 +15,37 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Download worlds.json.zip
+      - name: Download data.zip
+        env:
+          DATABASE_EXPORT_API_KEY: ${{ secrets.DATABASE_EXPORT_API_KEY }}
         run: |
-          curl -o worlds.json.zip https://apibeta.mapsnotincluded.org/export
+          curl --fail -H "DATABASE_EXPORT_API_KEY: $DATABASE_EXPORT_API_KEY" -o data.zip https://ingest.mapsnotincluded.org/export
+      - name: set NOW
+        run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "database-export-$(date +'%Y%m%d')"
-          release_name: "Database Export - $(date +'%Y-%m-%d')"
-          body: "Automated release of database export."
+          tag_name: "data-${{ env.NOW }}"
+          release_name: "Data ${{ env.NOW }} "
+          body: "Automated export of collected seed data in JSON format."
           draft: false
           prerelease: false
-      - name: Upload worlds.json.zip to release
+      - name: Upload data.zip to release
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./worlds.json.zip
-          asset_name: worlds.json.zip
+          asset_path: ./data.zip
+          asset_name: data.zip
           asset_content_type: application/zip
+      - name: Delete old releases
+        uses: dev-drprasad/delete-older-releases@v0.3.4
+        with:
+          keep_latest: 2
+          delete_tag_pattern: data-*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

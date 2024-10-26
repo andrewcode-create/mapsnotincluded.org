@@ -191,7 +191,16 @@ namespace _WorldGenStateCapture.WorldStateData.WorldPOIs
 
                 //Cryopod
                 yield return typeof(CryoTankConfig).GetMethod(name);
-            }
+
+				//klei wtf is with those two two implementations???
+				//Ceres Geothermal Pump
+				yield return typeof(GeothermalControllerConfig).GetMethod("IEntityConfig."+name, BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+				//Ceres Geothermal Vent, no idea why that is marked as virtual
+				yield return typeof(GeothermalVentConfig).GetMethod(name);
+
+				//BaseGame surface lobby monument
+				yield return typeof(PropFacilityStatueConfig).GetMethod(name);				
+			}
 		}
 	}
 }

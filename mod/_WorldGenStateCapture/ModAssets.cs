@@ -4,18 +4,16 @@ using _WorldGenStateCapture.WorldStateData.WorldPOIs;
 using Klei.CustomSettings;
 using ProcGen;
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Networking;
-using static ProcGen.ClusterLayout;
 using static ProcGen.SubWorld;
-using static STRINGS.COLONY_ACHIEVEMENTS.ACTIVATEGEOTHERMALPLANT.STATUSITEMS;
-using static STRINGS.UI.CLUSTERMAP;
 using System.IO;
+using System.Threading.Tasks;
+using System.Threading;
+using MapsNotIncluded_WorldParser.WorldStateData;
 
 namespace _WorldGenStateCapture
 {
@@ -29,6 +27,48 @@ namespace _WorldGenStateCapture
 		public static List<HexMap_Entry> dlcStarmapItems = new List<HexMap_Entry>();
 		public static List<VanillaMap_Entry> baseStarmapItems = new List<VanillaMap_Entry>();
 
+
+		internal static void AccumulateFailedSeedData(OfflineWorldGen instance)
+		{
+			if (ModAssets.ModDilution)
+			{
+				Debug.LogError("Other active mods detected, aborting world parsing.");
+				return;
+			}
+			bool dlcActive = DlcManager.IsExpansion1Active();
+			Upload_FailedGeneration data = new Upload_FailedGeneration();
+			SettingLevel layoutQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout);
+			ClusterLayout clusterData = SettingsCache.clusterLayouts.GetClusterData(layoutQualitySetting.id);
+
+			SettingLevel seedQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.WorldgenSeed);
+			//string otherSettingsCode = CustomGameSettings.Instance.GetOtherSettingsCode();
+			string storyTraitSettingsCode = CustomGameSettings.Instance.GetStoryTraitSettingsCode();
+
+			int.TryParse(seedQualitySetting.id, out int seed);
+
+			// DataItem.seed = seed;
+
+			data.coordinate = CustomGameSettings.Instance.GetSettingsCoordinate();
+			data.fileHashes = IntegrityCheck.HarvestClusterHashes(clusterData, seed);
+
+			string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+
+			MNI_Statistics.Instance.OnFailedSeedGenerated();
+
+			App.instance.StartCoroutine( RequestHelper.TryPostRequest(Credentials.API_URL_REPORT_FAILED, json, 
+			() =>
+			{
+				ClearData();
+				App.LoadScene(instance.frontendGameLevel);
+			}, (_) =>
+			{
+				ClearData();
+				App.LoadScene(instance.frontendGameLevel);
+			}));
+		}
+
+
+
 		internal static void AccumulateSeedData()
 		{
 
@@ -39,22 +79,22 @@ namespace _WorldGenStateCapture
 			}
 			bool dlcActive = DlcManager.IsExpansion1Active();
 
-			Upload data = new Upload();
+			Upload_SuccessfulGeneration data = new Upload_SuccessfulGeneration();
 			WorldDataInstance worldDataItem = new WorldDataInstance();
 
-			SettingLevel currentQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout);
-			if (currentQualitySetting == null)
+			SettingLevel layoutQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout);
+			if (layoutQualitySetting == null)
 			{
 				Debug.LogError("Clusterlayout was null");
 				return;
 			}
 
-			ClusterLayout clusterData = SettingsCache.clusterLayouts.GetClusterData(currentQualitySetting.id);
-			SettingLevel currentQualitySetting2 = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.WorldgenSeed);
+			ClusterLayout clusterData = SettingsCache.clusterLayouts.GetClusterData(layoutQualitySetting.id);
+			SettingLevel seedQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.WorldgenSeed);
 			//string otherSettingsCode = CustomGameSettings.Instance.GetOtherSettingsCode();
 			string storyTraitSettingsCode = CustomGameSettings.Instance.GetStoryTraitSettingsCode();
 
-			int.TryParse(currentQualitySetting2.id, out int seed);
+			int.TryParse(seedQualitySetting.id, out int seed);
 
 			// DataItem.seed = seed;
 
@@ -80,7 +120,7 @@ namespace _WorldGenStateCapture
 						break;
 				}
 			}
-			data.fileHashes = IntegrityCheck.HarvestClusterHashes(clusterData);
+			data.fileHashes = IntegrityCheck.HarvestClusterHashes(clusterData, seed);
 
 			worldDataItem.dlcs = cleanDlcIds;
 
@@ -136,7 +176,7 @@ namespace _WorldGenStateCapture
 			{
 				worldDataItem.starMapEntriesVanilla = new(baseStarmapItems);
 			}
-			data.world = worldDataItem;
+			data.cluster = worldDataItem;
 
 
 			MNI_Statistics.Instance.OnSeedGenerated();
@@ -150,7 +190,7 @@ namespace _WorldGenStateCapture
 
 			//Console.WriteLine(json);
 			//attach the coroutine to the main game object
-			App.instance.StartCoroutine(RequestHelper.TryPostRequest(json, ClearAndRestart, (data) =>
+			App.instance.StartCoroutine(RequestHelper.TryPostRequest(Credentials.API_URL_UPLOAD, json, ClearAndRestart, (data) =>
 			{
 				//StoreForLater(data, worldDataItem.coordinate);
 				ClearAndRestart();
@@ -197,7 +237,7 @@ namespace _WorldGenStateCapture
 			}
 			sb.Remove(sb.Length - 1, 1);  //remove last newline
 			return sb.ToString();
-		}		
+		}
 
 		/// <summary>
 		/// generates an SVG image of all biome polygons of the given asteroid
@@ -403,8 +443,57 @@ namespace _WorldGenStateCapture
 			if (RestartAfterGeneration)
 				App.instance.Restart();
 			else
-				PauseScreen.instance.OnQuitConfirm();
+			{
+				StartBackupRestart();
+				if (PauseScreen.instance != null)
+				{
+					PauseScreen.instance.OnQuitConfirm();
+				}
+				else
+					App.instance.Restart(); //fallback
+			}
 		}
+
+		public static void StartBackupRestart()
+		{
+			if (cancelTokenSource != null) //cancel previous timer
+				cancelTokenSource.Cancel();
+
+			cancelTokenSource = new CancellationTokenSource();
+
+			var ct = cancelTokenSource.Token;
+			Task.Factory.StartNew(() =>
+			{
+				for (int i = 0; i < 60; ++i)
+				{
+					if (ct.IsCancellationRequested)
+					{
+						Console.WriteLine($"MNI UnloadedBackend\nTime to load to the main menu after seed committment: {i} seconds");
+						break;
+					}
+					Thread.Sleep(1000);
+
+				}
+				//if this thread wasnt canceled after 60 seconds, restart app (sth has crashed in the bg)
+				if (!ct.IsCancellationRequested)
+				{
+					Console.WriteLine($"MNI UnloadedBackend\nThe Backend wasn't unloaded in less than 60 seconds, the application will now restart.");
+					App.instance.Restart();
+				}
+
+			}, ct);
+
+		}
+		public static void OnMainMenuLoaded()
+		{
+			if (cancelTokenSource != null) //cancel previous timer
+			{
+				//Console.WriteLine("main menu reached, canceling backup timer");
+				cancelTokenSource.Cancel();
+			}
+		}
+
+		static CancellationTokenSource cancelTokenSource = null;
 
 		internal static void StoreForLater(byte[] data, string offlineFileName)
 		{
@@ -432,9 +521,9 @@ namespace _WorldGenStateCapture
 			Debug.Log("Connection reestablished, uploading stored " + files.Length + " datasets");
 			foreach (var file in files)
 			{
-				if(FileToByteArray(file, out var data))
+				if (FileToByteArray(file, out var data))
 				{
-					App.instance.StartCoroutine(RequestHelper.TryPostRequest(data, () => UnstoreLater(file), (_) =>{ }));
+					App.instance.StartCoroutine(RequestHelper.TryPostRequest(Credentials.API_URL_UPLOAD, data, () => UnstoreLater(file), (_) => { }));
 				}
 			}
 		}

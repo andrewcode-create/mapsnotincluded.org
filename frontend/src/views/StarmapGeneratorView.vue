@@ -4,11 +4,13 @@
 
 <template>
   <main class="container mt-5">
-    <h1>Starmap Generator</h1>
-    <p>Unfortunatly, the starmap generator is still a work in progress.</p>
-    <p>When the starmap generator is working, it will be put here.</p>
-        
-    <br>
-    <p>You can also <router-link to="/contribute">contribute</router-link> to the development of this website.</p>
+    <h1>{{ $t('starmap_generator.title') }}</h1>
+    <p>{{ $t('starmap_generator.description_1') }}</p>
+    <br/>
+    <i18n-t keypath="starmap_generator.description_2" tag="p">
+      <template v-slot:contribute>
+        <router-link to="/contribute">{{ $t('starmap_generator.link.contribute') }}</router-link>
+      </template>
+    </i18n-t>
   </main>
 </template>
