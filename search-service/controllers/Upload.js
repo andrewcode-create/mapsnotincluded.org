@@ -8,12 +8,37 @@ const fs = require('fs');
 const uploadSingleJson = async (jsonOld, numtoPrint = 0, printClusters = true) => {
     const transaction = await sequelize.transaction();
     try {
+        // set dlc based on coordinate info
+        let coor = jsonOld.coordinate;
+        let spacedOut = false;
+        let vanilla = true;
+        let frostyPlanet = false;
+
+        const coorArr = coor.split("-");
+
+        // set spacedOut dlc
+        if (coorArr[1] === "C" || coorArr[2] === "C") {
+            spacedOut = true;
+        };
+
+        // set frostyPlanet dlc
+        if (coorArr[0].includes("CER") ||
+            coorArr[1].includes("CER") ||
+            coorArr[coorArr.length-1] !== "0"
+        ) {
+            frostyPlanet = true;
+        };
+        
+        if (spacedOut === true || frostyPlanet === true) {
+            vanilla = false;
+        };
+
         const newCluster = await Cluster.create({
             coordinate: jsonOld.coordinate,
             gameVersion: parseInt(jsonOld["gameVersion"]),
-            vanilla: jsonOld["dlcs"].length === 0,
-            spacedOut: jsonOld["dlcs"].includes("SpacedOut"),
-            frostyPlanet: jsonOld["dlcs"].includes("FrostyPlanet"),
+            vanilla: vanilla,
+            spacedOut: spacedOut,
+            frostyPlanet: frostyPlanet,
         }, {
             transaction:transaction
         });
