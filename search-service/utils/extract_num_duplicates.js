@@ -15,7 +15,7 @@ const logUniqueValues = (filePath) => {
             const frequencyMap = {};
 
 
-            // Loop through the array and add values to the Set
+            // Loop through the array 
             let duplicateCount = 0;
             jsonArray.forEach(seed => {
                 frequencyMap[seed["coordinate"]] = (frequencyMap[seed["coordinate"]] || 0) + 1
