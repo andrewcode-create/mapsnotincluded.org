@@ -163,8 +163,7 @@ const initializeDatabase = async () => {
             await TotalGeyserOutput.sync({ alter: true });
             */
             console.log("Initializing database...")
-            setAssociations()
-            console.log("Set associations. Syncing...")
+            console.log("Syncing...")
             //await sequelize.sync({force:true});
             await Cluster.sync({ force: true });
             console.log('----------------cluster created------------');
@@ -174,8 +173,10 @@ const initializeDatabase = async () => {
             console.log('----------------asteroid created------------');
             await TotalGeyserOutput.sync({ force: true });
             console.log('----------------TotalGeyserOutput created------------');
-
             console.log('All tables created successfully!');
+            setAssociations();
+            console.log("Set associations.")
+
             database_initialized = true
         } catch (error) {
             console.error('Error creating tables: ', error);
