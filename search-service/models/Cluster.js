@@ -8,13 +8,18 @@ const Cluster = sequelize.define('Cluster', {
         primaryKey: true,
         type: DataTypes.STRING,
         allowNull: false
-        //TODO add validation
+        //TODO: add validation
+    },
+    
+    cluster: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     
     gameVersion: {
         type: DataTypes.STRING,
         allowNull: false
-        //TODO add validation
+        //TODO: add validation
     },
 
     vanilla: {

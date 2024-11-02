@@ -35,6 +35,7 @@ const uploadSingleJson = async (jsonOld, numtoPrint = 0, printClusters = true) =
 
         const newCluster = await Cluster.create({
             coordinate: jsonOld.coordinate,
+            cluster: jsonOld.cluster,
             gameVersion: parseInt(jsonOld["gameVersion"]),
             vanilla: vanilla,
             spacedOut: spacedOut,
