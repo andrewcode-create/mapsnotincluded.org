@@ -14,6 +14,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using MapsNotIncluded_WorldParser.WorldStateData;
+using MapsNotIncluded_WorldParser;
 
 namespace _WorldGenStateCapture
 {
@@ -41,10 +42,10 @@ namespace _WorldGenStateCapture
 			ClusterLayout clusterData = SettingsCache.clusterLayouts.GetClusterData(layoutQualitySetting.id);
 
 			SettingLevel seedQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.WorldgenSeed);
-			//string otherSettingsCode = CustomGameSettings.Instance.GetOtherSettingsCode();
-			string storyTraitSettingsCode = CustomGameSettings.Instance.GetStoryTraitSettingsCode();
+            //string otherSettingsCode = CustomGameSettings.Instance.GetOtherSettingsCode();
+            MNI_Statistics.Instance.SetMixingRunActive(CustomGameSettings.Instance.GetMixingSettingsCode() != "0");
 
-			int.TryParse(seedQualitySetting.id, out int seed);
+            int.TryParse(seedQualitySetting.id, out int seed);
 
 			// DataItem.seed = seed;
 
@@ -58,7 +59,7 @@ namespace _WorldGenStateCapture
 			App.instance.StartCoroutine( RequestHelper.TryPostRequest(Credentials.API_URL_REPORT_FAILED, json, 
 			() =>
 			{
-				ClearData();
+                ClearData();
 				App.LoadScene(instance.frontendGameLevel);
 			}, (_) =>
 			{
@@ -67,9 +68,18 @@ namespace _WorldGenStateCapture
 			}));
 		}
 
+		public static bool LastConnectionSuccessful = true;
+        public static void ConnectionSuccessful()
+        {
+            LastConnectionSuccessful = true;
+        }
+        public static void ConnectionError()
+        {
+			Debug.LogWarning("MNI failed to upload to the server!");
+            LastConnectionSuccessful = false;
+        }
 
-
-		internal static void AccumulateSeedData()
+        internal static void AccumulateSeedData()
 		{
 
 			if (ModAssets.ModDilution)
@@ -91,38 +101,25 @@ namespace _WorldGenStateCapture
 
 			ClusterLayout clusterData = SettingsCache.clusterLayouts.GetClusterData(layoutQualitySetting.id);
 			SettingLevel seedQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.WorldgenSeed);
-			//string otherSettingsCode = CustomGameSettings.Instance.GetOtherSettingsCode();
-			string storyTraitSettingsCode = CustomGameSettings.Instance.GetStoryTraitSettingsCode();
 
-			int.TryParse(seedQualitySetting.id, out int seed);
+            if(!int.TryParse(seedQualitySetting.id, out int seed))
+			{
+				Debug.LogError("Seed Quality Setting was not a valid integer?!?!?");
+			}
+
+            MNI_Statistics.Instance.SetMixingRunActive(CustomGameSettings.Instance.GetMixingSettingsCode() != "0");
+
 
 			// DataItem.seed = seed;
 
 			worldDataItem.cluster = clusterData.GetCoordinatePrefix();
 			worldDataItem.coordinate = CustomGameSettings.Instance.GetSettingsCoordinate();
 
-			var cleanDlcIds = new List<string>();
+			var remappedDlcIdNameThings = BlackBoxInACornerBuriedDeepInMoria.GiveWeirdRemappedDlcIds(SaveLoader.Instance.GameInfo.dlcIds);
 
-			foreach (var dlcId in SaveLoader.Instance.GameInfo.dlcIds)
-			{
-				switch (dlcId)
-				{
-					case "": //base game "dlc" id, skip that
-						break;
-					case "DLC2_ID":
-						cleanDlcIds.Add("FrostyPlanet");
-						break;
-					case "EXPANSION1_ID":
-						cleanDlcIds.Add("SpacedOut");
-						break;
-					default:
-						cleanDlcIds.Add(dlcId); // If it's not a known ID, keep it as is
-						break;
-				}
-			}
 			data.fileHashes = IntegrityCheck.HarvestClusterHashes(clusterData, seed);
 
-			worldDataItem.dlcs = cleanDlcIds;
+			worldDataItem.dlcs = remappedDlcIdNameThings;
 
 			Debug.Log("accumulating asteroid data...");
 			foreach (var asteroid in ClusterManager.Instance.WorldContainers)
@@ -192,8 +189,9 @@ namespace _WorldGenStateCapture
 			//attach the coroutine to the main game object
 			App.instance.StartCoroutine(RequestHelper.TryPostRequest(Credentials.API_URL_UPLOAD, json, ClearAndRestart, (data) =>
 			{
-				//StoreForLater(data, worldDataItem.coordinate);
-				ClearAndRestart();
+                //StoreForLater(data, worldDataItem.coordinate);
+                ConnectionError();
+                ClearAndRestart();
 			}));
 		}
 
@@ -426,6 +424,8 @@ namespace _WorldGenStateCapture
 			currentPOIs.Clear();
 			dlcStarmapItems.Clear();
 			baseStarmapItems.Clear();
+
+            RequestHelper.OnMapGenerated();
 		}
 
 		public static bool lowMemRestartInitialized = false, RestartAfterGeneration = false;
@@ -441,7 +441,7 @@ namespace _WorldGenStateCapture
 				RestartAfterGeneration = true;
 
 			if (RestartAfterGeneration)
-				App.instance.Restart();
+				ModAssets.RestartAndKillThreads();
 			else
 			{
 				StartBackupRestart();
@@ -450,7 +450,7 @@ namespace _WorldGenStateCapture
 					PauseScreen.instance.OnQuitConfirm();
 				}
 				else
-					App.instance.Restart(); //fallback
+                    RestartAndKillThreads(); //fallback
 			}
 		}
 
@@ -468,7 +468,7 @@ namespace _WorldGenStateCapture
 				{
 					if (ct.IsCancellationRequested)
 					{
-						Console.WriteLine($"MNI UnloadedBackend\nTime to load to the main menu after seed committment: {i} seconds");
+                        MNI_Statistics.Instance.OnBackendUnloaded(true, i);
 						break;
 					}
 					Thread.Sleep(1000);
@@ -476,9 +476,10 @@ namespace _WorldGenStateCapture
 				}
 				//if this thread wasnt canceled after 60 seconds, restart app (sth has crashed in the bg)
 				if (!ct.IsCancellationRequested)
-				{
-					Console.WriteLine($"MNI UnloadedBackend\nThe Backend wasn't unloaded in less than 60 seconds, the application will now restart.");
-					App.instance.Restart();
+                {
+                    MNI_Statistics.Instance.OnBackendUnloaded(false, 60);
+                    
+                    RestartAndKillThreads();
 				}
 
 			}, ct);
@@ -509,6 +510,13 @@ namespace _WorldGenStateCapture
 		{
 			System.IO.File.Delete(offlineFileName);
 		}
+
+		public static void RestartAndKillThreads()
+        {
+			if(cancelTokenSource != null && !cancelTokenSource.IsCancellationRequested)
+				cancelTokenSource?.Cancel();
+            App.instance.Restart();
+        }
 
 		public static void TrySendingCollected()
 		{

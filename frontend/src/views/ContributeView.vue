@@ -36,8 +36,14 @@
     <div class="mb-5">
       <h2 class="text-danger">{{ $t('contribute.header.donation') }}</h2>
       <i18n-t keypath="contribute.description.donation" tag="p">
-        <template v-slot:oniLink>
-          <a href="https://www.klei.com/games/oxygen-not-included" target="mni_oni">Oxygen Not Included</a>
+        <template v-slot:donateHosting>
+          <a href="https://github.com/sponsors/barratt" target="mni_sponsor_hosting">{{ $t('contribute.link.donate_hosting') }}</a>
+        </template>
+        <template v-slot:donateSeedBrowser>
+          <a href="https://github.com/sponsors/StefanOltmann" target="mni_sponsor_seed_browser">{{ $t('contribute.link.donate_seed_browser') }}</a>
+        </template>
+        <template v-slot:donateMod>
+          <a href="https://ko-fi.com/sgtimalas" target="mni_sponsor_mod">{{ $t('contribute.link.donate_mod') }}</a>
         </template>
       </i18n-t>
     </div>  
