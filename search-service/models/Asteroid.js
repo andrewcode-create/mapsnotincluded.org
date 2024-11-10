@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize     = require('../lib/database');
-const Cluster       = require('./Cluster');
 
 // This is the data for each asteriod
 const Asteroid = sequelize.define('Asteroid', {
@@ -19,11 +18,12 @@ const Asteroid = sequelize.define('Asteroid', {
         }
     },
 
-
     name: {
         type: DataTypes.STRING,
-        allowNull: false
-        //TODO add validation
+        // null name indicates cluster world traits, bad design pattern but makes
+        // building search rules easier without making a new table and joining
+        allowNull: true 
+        //TODO: add validation
     },
 
     worldTraits: {
@@ -50,7 +50,7 @@ const Asteroid = sequelize.define('Asteroid', {
                     throw new Error("this asteroid has more than 4 world traits");
                 }
             }
-            //TODO add validation for conficting traits
+            //TODO: add validation for conficting traits
         },
         allowNull: true, // allow having an empty array
     },
