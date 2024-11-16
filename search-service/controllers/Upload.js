@@ -24,7 +24,7 @@ const uploadSingleJson = async (jsonOld, numtoPrint = 0, printClusters = true) =
         // set frostyPlanet dlc
         if (coorArr[0].includes("CER") ||
             coorArr[1].includes("CER") ||
-            coorArr[coorArr.length-1] !== "0"
+            coorArr[coorArr.length-1] !== "0" // indicates mixing
         ) {
             frostyPlanet = true;
         };
@@ -44,18 +44,6 @@ const uploadSingleJson = async (jsonOld, numtoPrint = 0, printClusters = true) =
             transaction:transaction
         });
 
-        /*
-        await Dlc.create({
-            coordinate: jsonOld.coordinate,
-            vanilla: jsonOld["dlcs"].length === 0,
-            spacedOut: jsonOld["dlcs"].includes("SpacedOut"),
-            frostyPlanet: jsonOld["dlcs"].includes("FrostyPlanet"),
-        }, {
-            transaction:transaction
-        });
-        */
-
-
         const asteroidBulkData = jsonOld.asteroids.map(asteroidData => ({
             coordinate: newCluster.coordinate,
             name: asteroidData.id,
@@ -67,12 +55,16 @@ const uploadSingleJson = async (jsonOld, numtoPrint = 0, printClusters = true) =
         const totalGeyserOutputBulkData = createdAsteroids.map(asteroid => ({
             clusterId: null,
             asteroidId: asteroid.id, // link it to the asteroid
-            //TODO add geysers, default to 0 for now
         }));
 
         let i = 0;
         let geyser_keys = [];
+        let newClusterTraits = [];
         jsonOld.asteroids.forEach(asteroid => {
+            // add worldTrait to clusterTraits
+            newClusterTraits.push(...asteroid.worldTraits);
+
+            // add geysers
             asteroid["geysers"].forEach(geyser => {
                 if (totalGeyserOutputBulkData[i][`${geyser.id}_Count`]) {
                     //already had one
@@ -86,6 +78,18 @@ const uploadSingleJson = async (jsonOld, numtoPrint = 0, printClusters = true) =
                 }
             })
             i++
+        });
+
+        // remove duplicates from newClusterTraits
+        newClusterTraits = [...new Set(newClusterTraits)];
+
+        // for easier searching of worldTraits over cluster
+        await Asteroid.create({
+            coordinate: newCluster.coordinate,
+            name: null,
+            worldTraits: newClusterTraits
+        }, {
+            transaction:transaction
         });
 
         gs = await TotalGeyserOutput.bulkCreate(totalGeyserOutputBulkData, { transaction:transaction , individualHooks: true, validate:true, hooks:true});
@@ -106,8 +110,6 @@ const uploadSingleJson = async (jsonOld, numtoPrint = 0, printClusters = true) =
 
         clusterGeyserOutput.clusterId = newCluster.coordinate;
         clusterGeyserOutput.asteroidId = null;
-
-
 
         await TotalGeyserOutput.create(clusterGeyserOutput, {transaction:transaction});
         
@@ -138,6 +140,11 @@ const uploadBulk = async(jsonArrOld, printClusters = true) =>  {
 
 let database_initialized = false;
 let database_init_promise = null;
+
+/* sync force true (line 166) overrides and drops current database
+ according to docs, sync should not be used in production
+ do we need to initialize the database everytime? How/when is upload being used?
+ */
 const initializeDatabase = async () => {
     console.log("try initialization")
     // If already initialized, return immediately
@@ -162,6 +169,9 @@ const initializeDatabase = async () => {
             await Asteroid.sync({ alter: true });
             await TotalGeyserOutput.sync({ alter: true });
             */
+
+            // sync force true overrides and drops current database
+            // according to docs, sync should not be used in production
             console.log("Initializing database...")
             console.log("Syncing...")
             //await sequelize.sync({force:true});
