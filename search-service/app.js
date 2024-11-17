@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 const discord = require("./lib/discord");
+//const discord = null;
+
 const mongo = require("./lib/mongo");
 const sequelize = require("./lib/database");
 //const { Save, File } = require('./models');
@@ -98,5 +100,14 @@ mongo
   .catch((err) => {
     console.error("MongoDB connection error:");
     console.error(err);
-    discord.send(`MongoDB connection error: ${err}`);
+    try {
+      discord.send(`MongoDB connection error: ${err}`);
+    } catch {
+      console.log("DISCORD WEBHOOK ERROR");
+      app.listen(port, interface, () => {
+        console.log(
+          `Server is running on port http://${interface}:${port} with prefix ${apiPrefix}`
+        );
+      });
+    }
   });
